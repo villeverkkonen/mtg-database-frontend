@@ -1,0 +1,36 @@
+body {
+    background-color: black;
+}
+
+.cardListUl {
+    width: fit-content;
+}
+
+.cardListLi:hover {
+    cursor: pointer;
+}
+
+.buttonWhite {
+    background-color: white;
+    color: black;
+}
+
+.buttonBlue {
+    background-color: blue;
+    color: black;
+}
+
+.buttonBlack {
+    background-color: purple;
+    color: white;
+}
+
+.buttonRed {
+    background-color: red;
+    color: black;
+}
+
+.buttonGreen {
+    background-color: green;
+    color: black;
+}

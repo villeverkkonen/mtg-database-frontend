@@ -13,7 +13,6 @@ const getColor = (color) => {
 
 const getById = (id) => {
     const request = axios.get(baseUrl + '/' + id)
-    // return Promise.resolve(request)
     return request.then(response => { return response.data })
 }
 

@@ -1,8 +1,11 @@
 import React from 'react'
 
-const Card = ({ index, cardName }) => {
+const Card = ({ card }) => {
   return (
-    <li key={index}>{cardName}</li>
+    <div className="showCard">
+        <p>{card.name}</p>
+        <img src={card.imageUrl} alt="cardImage" />
+    </div>
   )
 }
 

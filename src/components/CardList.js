@@ -1,12 +1,22 @@
 import React from 'react'
 
-const CardList = ({ cards, showCard }) => {
-    console.log(cards)
+const CardList = ({ cards, showCard, mouseOver, mouseOut }) => {
+
   return (
-    <ul>
+    <ul className="cardListUl">
         {
             cards.map(function(card, index) {
-                return <li key={index} onClick={showCard(card.id)}>{card.name}</li>
+                return(
+                    <li
+                        key={index}
+                        onClick={showCard(card.id)}
+                        onMouseOver={mouseOver(card.imageUrl)}
+                        onMouseOut={mouseOut}
+                        className="cardListLi"
+                    >
+                        {card.name}
+                    </li>
+                )
             })
         }
     </ul>

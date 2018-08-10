@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import cardService from './services/cards'
 import Card from './components/Card'
 import CardList from './components/CardList'
@@ -8,27 +8,39 @@ class App extends Component {
     super(props)
     this.state = {
       cards: [],
-      showCard: null
+      showCard: null,
+      mouseOver: false,
+      hoverImageUrl: '',
+      cardListColor: ''
     }
   }
 
-  // componentDidMount() {
-  // }
-
   getCardsWithColor = (event) => {
     event.preventDefault()
+    let color = event.target.value
+
     cardService
-      .getColor(event.target.value)
+      .getColor(color)
       .then(response => {
         let cardArray = []
         for (let i = 0; i < response.cards.length; i++) {
           cardArray.push(response.cards[i])
         }
 
+        if (color === 'black') {
+          color = 'purple'
+        }
+
         this.setState({
-          cards: cardArray
+          cards: cardArray,
+          showCard: null,
+          mouseOver: false,
+          hoverImageUrl: '',
+          cardListColor: color
         })
       })
+    
+
   }
 
   showCard = (id) => (event) => {
@@ -38,33 +50,62 @@ class App extends Component {
       .getById(id)
       .then(response => {
         this.setState({
-          showCard: response.card
+          showCard: response.card,
+          mouseOver: false,
+          hoverImageUrl: ''
         })
       })
-      console.log("")
-      console.log("showCard: ")
-      console.log(this.state.showCard)
-      console.log("")
+  }
+
+  mouseOver = (hoverImageUrl) => (event) => {
+    event.preventDefault()
+
+    this.setState({
+      mouseOver: true,
+      hoverImageUrl: hoverImageUrl
+    })
+  }
+
+  mouseOut = (event) => {
+    event.preventDefault()
+
+    this.setState({
+      mouseOver: false,
+      hoverImageUrl: ''
+    })
   }
 
   render() {
     return (
       <div>
         <div>
-          <button onClick={this.getCardsWithColor} value='white'>White</button>
-          <button onClick={this.getCardsWithColor} value='blue'>Blue</button>
-          <button onClick={this.getCardsWithColor} value='black'>Black</button>
-          <button onClick={this.getCardsWithColor} value='red'>Red</button>
-          <button onClick={this.getCardsWithColor} value='green'>Green</button>
+          <button onClick={this.getCardsWithColor} value='white' className='buttonWhite'>White</button>
+          <button onClick={this.getCardsWithColor} value='blue' className='buttonBlue'>Blue</button>
+          <button onClick={this.getCardsWithColor} value='black' className='buttonBlack'>Black</button>
+          <button onClick={this.getCardsWithColor} value='red' className='buttonRed'>Red</button>
+          <button onClick={this.getCardsWithColor} value='green' className='buttonGreen'>Green</button>
         </div>
 
         {this.state.showCard === null ?
-        <div className="cardList">
-          <CardList cards={this.state.cards} showCard={this.showCard.bind(this)} />
+        <div className="cardList" style={{color: this.state.cardListColor}}>
+          <CardList
+            cards={this.state.cards}
+            showCard={this.showCard.bind(this)}
+            mouseOver={this.mouseOver.bind(this)}
+            mouseOut={this.mouseOut.bind(this)}
+          />
         </div>
         :
-        this.state.showCard.name
+        <Card card={this.state.showCard} />
         }
+        {this.state.mouseOver
+        ?
+          <div className="hoverImage">
+            <img src={this.state.hoverImageUrl} alt={this.state.hoverImageUrl} />
+          </div>
+        :
+        null}
+
       </div>
     );
   }
