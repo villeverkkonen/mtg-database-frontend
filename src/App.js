@@ -79,20 +79,21 @@ class App extends Component {
     return (
       <div>
         <div>
-          <button onClick={this.getCardsWithColor} value='white' className='buttonWhite'>White</button>
-          <button onClick={this.getCardsWithColor} value='blue' className='buttonBlue'>Blue</button>
-          <button onClick={this.getCardsWithColor} value='black' className='buttonBlack'>Black</button>
-          <button onClick={this.getCardsWithColor} value='red' className='buttonRed'>Red</button>
-          <button onClick={this.getCardsWithColor} value='green' className='buttonGreen'>Green</button>
+          <button onClick={this.getCardsWithColor} value='white' className='btn btn-default buttonWhite'>White</button>
+          <button onClick={this.getCardsWithColor} value='blue' className='btn btn-default buttonBlue'>Blue</button>
+          <button onClick={this.getCardsWithColor} value='black' className='btn btn-default buttonBlack'>Black</button>
+          <button onClick={this.getCardsWithColor} value='red' className='btn btn-default buttonRed'>Red</button>
+          <button onClick={this.getCardsWithColor} value='green' className='btn btn-default buttonGreen'>Green</button>
         </div>
 
         {this.state.showCard === null ?
-        <div className="cardList" style={{color: this.state.cardListColor}}>
+        <div className="cardList">
           <CardList
             cards={this.state.cards}
             showCard={this.showCard.bind(this)}
             mouseOver={this.mouseOver.bind(this)}
             mouseOut={this.mouseOut.bind(this)}
+            color={this.state.cardListColor}
           />
         </div>
         :
@@ -101,7 +102,7 @@ class App extends Component {
         {this.state.mouseOver
         ?
           <div className="hoverImage">
-            <img src={this.state.hoverImageUrl} alt={this.state.hoverImageUrl} />
+            <img src={this.state.hoverImageUrl} alt="imageUrl" />
           </div>
         :
         null}
