@@ -85,6 +85,10 @@ body {
     background-color: green;
 }
 
+.showLinkForIdSpan {
+    text-decoration: underline;
+}
+
 @media screen and (max-width: 440px) {
     .btn {
         padding: 5px;

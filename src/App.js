@@ -6,12 +6,15 @@ import CardList from './components/CardList'
 class App extends Component {
   constructor(props) {
     super(props)
+    // Check if using mobile with touch
+    const touchsupport = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0)
     this.state = {
       cards: [],
       showCard: null,
       mouseOver: false,
       hoverImageUrl: '',
-      cardListColor: ''
+      cardListColor: '',
+      touchsupport: touchsupport
     }
   }
 
@@ -32,53 +35,80 @@ class App extends Component {
           showCard: null,
           mouseOver: false,
           hoverImageUrl: '',
-          cardListColor: color
+          cardListColor: color,
+          showLinkForId: ''
         })
       })
-    
-
   }
 
-  showCard = (id, imageUrl) => (event) => {
+  showImageOrCard = (id, imageUrl) => (event) => {
     event.preventDefault()
 
-    const touchsupport = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0)
-    if (!touchsupport){ // browser doesn't support touch
-    console.log("JOO")
+    if (!this.state.touchsupport || this.state.hoverImageUrl === imageUrl) {
+      this.showCard(id)
+    } else {
       this.setState({
         mouseOver: true,
         hoverImageUrl: imageUrl
       })
-    } else {
-console.log("EI")
-      cardService
-        .getById(id)
-        .then(response => {
-          this.setState({
-            showCard: response.card,
-            mouseOver: false,
-            hoverImageUrl: ''
-          })
+
+      if (this.state.touchsupport) {
+        this.setState({
+          showLinkForId: id
         })
+      }
     }
+  }
+
+  showCard = (id) => {
+
+    cardService
+      .getById(id)
+      .then(response => {
+        this.setState({
+          showCard: response.card,
+          mouseOver: false,
+          hoverImageUrl: ''
+        })
+      })
+  }
+
+  showCardForMobile = (id) => (event) => {
+    event.preventDefault()
+
+    cardService
+      .getById(id)
+      .then(response => {
+        this.setState({
+          showCard: response.card,
+          mouseOver: false,
+          hoverImageUrl: ''
+        })
+      })
   }
 
   mouseOver = (imageUrl) => (event) => {
     event.preventDefault()
 
-    this.setState({
-      mouseOver: true,
-      hoverImageUrl: imageUrl
-    })
+    if (!this.state.touchsupport) {
+
+      this.setState({
+        mouseOver: true,
+        hoverImageUrl: imageUrl
+      })
+    }
   }
 
   mouseOut = (event) => {
     event.preventDefault()
 
-    this.setState({
-      mouseOver: false,
-      hoverImageUrl: ''
-    })
+    if (!this.state.touchsupport) {
+
+      this.setState({
+        mouseOver: false,
+        hoverImageUrl: ''
+      })
+    }
   }
 
   render() {
@@ -96,10 +126,12 @@ console.log("EI")
         <div className="cardList">
           <CardList
             cards={this.state.cards}
-            showCard={this.showCard.bind(this)}
+            showCardForMobile={this.showCardForMobile}
+            showImageOrCard={this.showImageOrCard.bind(this)}
             mouseOver={this.mouseOver.bind(this)}
             mouseOut={this.mouseOut.bind(this)}
             color={this.state.cardListColor}
+            showLinkForId={this.state.showLinkForId}
           />
         </div>
         :
