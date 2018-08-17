@@ -14,10 +14,12 @@ class App extends Component {
       mouseOver: false,
       hoverImageUrl: '',
       cardListColor: '',
-      touchsupport: touchsupport
+      touchsupport: touchsupport,
+      showLinkForId: ''
     }
   }
 
+  // Get 5 random cards with chosen color
   getCardsWithColor = (event) => {
     event.preventDefault()
     const color = event.target.value
@@ -25,43 +27,34 @@ class App extends Component {
     cardService
       .getColor(color)
       .then(response => {
-        let cardArray = []
-        for (let i = 0; i < response.cards.length; i++) {
-          cardArray.push(response.cards[i])
-        }
-
+        // Add cards to array in state and clear hovering settings
         this.setState({
-          cards: cardArray,
+          cards: response.cards,
           showCard: null,
           mouseOver: false,
           hoverImageUrl: '',
-          cardListColor: color,
-          showLinkForId: ''
+          cardListColor: color
         })
       })
   }
 
+  // Hovering is not possible if using mobile, so when clicked with mobile, display image and button for show view
   showImageOrCard = (id, imageUrl) => (event) => {
     event.preventDefault()
 
-    if (!this.state.touchsupport || this.state.hoverImageUrl === imageUrl) {
+    if (!this.state.touchsupport) {
       this.showCard(id)
     } else {
       this.setState({
         mouseOver: true,
-        hoverImageUrl: imageUrl
+        hoverImageUrl: imageUrl,
+        showLinkForId: id
       })
-
-      if (this.state.touchsupport) {
-        this.setState({
-          showLinkForId: id
-        })
-      }
     }
   }
 
+  // Two almost duplicate methods because other one needs event.preventDefault() and this won't work with it
   showCard = (id) => {
-
     cardService
       .getById(id)
       .then(response => {
@@ -73,6 +66,7 @@ class App extends Component {
       })
   }
 
+  // Without preventing default event (clicked from button) this activates straight away when clicked on a card name
   showCardForMobile = (id) => (event) => {
     event.preventDefault()
 
@@ -87,6 +81,7 @@ class App extends Component {
       })
   }
 
+  // On desktop show card image when hovering the name
   mouseOver = (imageUrl) => (event) => {
     event.preventDefault()
 
@@ -99,6 +94,7 @@ class App extends Component {
     }
   }
 
+  // Hide the card image when not hovering the name
   mouseOut = (event) => {
     event.preventDefault()
 

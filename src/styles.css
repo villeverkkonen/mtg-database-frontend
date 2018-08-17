@@ -85,8 +85,8 @@ body {
     background-color: green;
 }
 
-.showLinkForIdSpan {
-    text-decoration: underline;
+.showLinkForIdButton {
+    background-color: #c653c6;
 }
 
 @media screen and (max-width: 440px) {

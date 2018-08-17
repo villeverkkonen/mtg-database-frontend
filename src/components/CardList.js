@@ -18,7 +18,7 @@ const CardList = ({ cards, showCardForMobile, showImageOrCard, mouseOver, mouseO
                         >
                             {card.name}
                             <br />
-                            <span onClick={showCardForMobile(card.id)} className="showLinkForIdSpan">Show</span>
+                            <button onClick={showCardForMobile(card.id)} className="btn showLinkForIdButton">Show</button>
                         </li>
                     )
                 } else {
