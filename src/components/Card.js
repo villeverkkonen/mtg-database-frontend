@@ -4,12 +4,39 @@ const Card = ({ card }) => {
   return (
     <div className="showCard">
         <img src={card.imageUrl} alt="imageUrl" />
-        <ul className="list-group">
-          <li className="list-group-item">Name: {card.name}</li>
-          <li className="list-group-item">Mana cost: {card.manaCost}</li>
-          <li className="list-group-item">Set: {card.setName}</li>
-          <li className="list-group-item">Rarity: {card.rarity}</li>
-        </ul>
+
+        <div className="row">
+          <div className="col-sm-4 title-cell cardLeftColumn">
+            Name:
+          </div>
+          <div className="col-sm-8 data-cell cardRightColumn">
+            {card.name}
+          </div>
+        </div>
+
+        <div className="row">
+          <div className="col-sm-4 title-cell cardLeftColumn">
+            Set:
+          </div>
+          <div className="col-sm-8 data-cell cardRightColumn">
+            {card.setName}
+          </div>
+        </div>
+
+        <div className="row">
+          <div className="col-sm-4 title-cell cardLeftColumn">
+            Rarity:
+          </div>
+          <div className="col-sm-8 data-cell cardRightColumn">
+            {card.rarity}
+          </div>
+        </div>
+
+        <div className="row cardText">
+          <div className="col-sm-12 title-cell">
+            {card.text}
+          </div>
+        </div>
     </div>
   )
 }

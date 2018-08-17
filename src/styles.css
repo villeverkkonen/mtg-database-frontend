@@ -1,5 +1,5 @@
 body {
-    background-color: black;
+    background-color: #c653c6;
     text-align: center;
 }
 
@@ -8,7 +8,8 @@ body {
 }
 
 .cardListLi {
-    background-color: black;
+    background-color: #ffa366;
+    font-weight: bold;
 }
 
 .cardListLi:hover {
@@ -22,19 +23,35 @@ body {
 
 .showCard {
     color: white;
-    width: fit-content;
+    width: 223px;
     text-align: center;
     display: inline-block;
     margin: 20px;
 }
 
 .showCard ul li {
-    background-color: black;
+    background-color: #ffa366;
+}
+
+.cardText {
+    margin-top: 10px;
+}
+
+.cardLeftColumn {
+    text-align: left;
+}
+
+.cardRightColumn {
+    text-align: right;
+}
+
+.colorButtons {
+    margin-top: 20px;
 }
 
 .btn {
     margin: 10px;
-    color: black;
+    color: white;
     font-weight: bold;
 }
 
@@ -44,6 +61,7 @@ body {
 
 .buttonWhite {
     background-color: white;
+    color: black;
 }
 
 .buttonBlue {
@@ -51,7 +69,7 @@ body {
 }
 
 .buttonBlack {
-    background-color: purple;
+    background-color: black;
 }
 
 .buttonRed {

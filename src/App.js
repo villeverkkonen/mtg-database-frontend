@@ -17,7 +17,7 @@ class App extends Component {
 
   getCardsWithColor = (event) => {
     event.preventDefault()
-    let color = event.target.value
+    const color = event.target.value
 
     cardService
       .getColor(color)
@@ -25,10 +25,6 @@ class App extends Component {
         let cardArray = []
         for (let i = 0; i < response.cards.length; i++) {
           cardArray.push(response.cards[i])
-        }
-
-        if (color === 'black') {
-          color = 'purple'
         }
 
         this.setState({
@@ -78,7 +74,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <div>
+        <div className="colorButtons">
           <button onClick={this.getCardsWithColor} value='white' className='btn btn-default buttonWhite'>White</button>
           <button onClick={this.getCardsWithColor} value='blue' className='btn btn-default buttonBlue'>Blue</button>
           <button onClick={this.getCardsWithColor} value='black' className='btn btn-default buttonBlack'>Black</button>
