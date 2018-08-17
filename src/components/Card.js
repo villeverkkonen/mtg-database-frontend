@@ -5,29 +5,29 @@ const Card = ({ card }) => {
     <div className="showCard">
         <img src={card.imageUrl} alt="imageUrl" />
 
-        <div className="row">
-          <div className="col-sm-4 title-cell cardLeftColumn">
+        <div className="row showCardRow">
+          <div className="col-sm-4 title-cell showCardLeftColumn">
             Name:
           </div>
-          <div className="col-sm-8 data-cell cardRightColumn">
+          <div className="col-sm-8 data-cell showCardRightColumn">
             {card.name}
           </div>
         </div>
 
-        <div className="row">
-          <div className="col-sm-4 title-cell cardLeftColumn">
+        <div className="row showCardRow">
+          <div className="col-sm-4 title-cell showCardLeftColumn">
             Set:
           </div>
-          <div className="col-sm-8 data-cell cardRightColumn">
+          <div className="col-sm-8 data-cell showCardRightColumn">
             {card.setName}
           </div>
         </div>
 
-        <div className="row">
-          <div className="col-sm-4 title-cell cardLeftColumn">
+        <div className="row showCardRow">
+          <div className="col-sm-4 title-cell showCardLeftColumn">
             Rarity:
           </div>
-          <div className="col-sm-8 data-cell cardRightColumn">
+          <div className="col-sm-8 data-cell showCardRightColumn">
             {card.rarity}
           </div>
         </div>

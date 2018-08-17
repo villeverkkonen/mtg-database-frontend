@@ -33,15 +33,20 @@ body {
     background-color: #ffa366;
 }
 
+.showCard .showCardRow .title-cell {
+    font-weight: bold;
+    color: black;
+}
+
 .cardText {
     margin-top: 10px;
 }
 
-.cardLeftColumn {
+.showCardLeftColumn {
     text-align: left;
 }
 
-.cardRightColumn {
+.showCardRightColumn {
     text-align: right;
 }
 
@@ -82,6 +87,18 @@ body {
 
 @media screen and (max-width: 440px) {
     .btn {
-        padding: 0;
+        padding: 5px;
+    }
+
+    .showCardLeftColumn {
+        text-align: center;
+    }
+    
+    .showCardRightColumn {
+        text-align: center;
+    }
+
+    .showCardRow {
+        margin-bottom: 5px;
     }
 }
