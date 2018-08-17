@@ -2,12 +2,12 @@ import axios from 'axios'
 const baseUrl = 'https://api.magicthegathering.io/v1/cards'
 
 const getAll = () => {
-    const request = axios.get(baseUrl + '?&pageSize=5&random=true')
+    const request = axios.get(baseUrl + '?contains=imageUrl&pageSize=5&random=true')
     return request.then(response => { return response.data })
 }
 
 const getColor = (color) => {
-    const request = axios.get(baseUrl + '?&pageSize=5&random=true&colors=' + color)
+    const request = axios.get(baseUrl + '?contains=imageUrl&pageSize=5&random=true&colors=' + color)
     return request.then(response => { return response.data })
 }
 
