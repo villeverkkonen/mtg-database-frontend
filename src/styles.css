@@ -1,5 +1,5 @@
 body {
-    background-color: black;
+    background-color: rgb(82, 50, 50);
     text-align: center;
 }
 
@@ -9,7 +9,7 @@ body {
 
 .cardListLi {
     font-weight: bold;
-    background-color: rgb(230, 132, 148);
+    background-color: rgb(233, 129, 146);
 }
 
 .cardListLi:hover {
@@ -51,7 +51,7 @@ body {
 }
 
 .colorButtons {
-    background-color: #696969;
+    background-color: #834949;
     padding-top: 10px;
     padding-bottom: 10px;
 }

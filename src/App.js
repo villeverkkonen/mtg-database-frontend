@@ -45,11 +45,19 @@ class App extends Component {
     if (!this.state.touchsupport) {
       this.showCard(id)
     } else {
-      this.setState({
-        mouseOver: true,
-        hoverImageUrl: imageUrl,
-        showLinkForId: id
-      })
+      if (this.state.hoverImageUrl === imageUrl) {
+        this.setState({
+          mouseOver: false,
+          hoverImageUrl: '',
+          showLinkForId: ''
+        })
+      } else {
+        this.setState({
+          mouseOver: true,
+          hoverImageUrl: imageUrl,
+          showLinkForId: id
+        })
+      }
     }
   }
 
