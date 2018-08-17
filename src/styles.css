@@ -1,5 +1,5 @@
 body {
-    background-color: #c653c6;
+    background-color: black;
     text-align: center;
 }
 
@@ -8,8 +8,8 @@ body {
 }
 
 .cardListLi {
-    background-color: #ffa366;
     font-weight: bold;
+    background-color: rgb(230, 132, 148);
 }
 
 .cardListLi:hover {
@@ -29,13 +29,9 @@ body {
     margin: 20px;
 }
 
-.showCard ul li {
-    background-color: #ffa366;
-}
-
 .showCard .showCardRow .title-cell {
     font-weight: bold;
-    color: black;
+    color: gold;
 }
 
 .cardText {
@@ -55,7 +51,9 @@ body {
 }
 
 .colorButtons {
-    margin-top: 20px;
+    background-color: #696969;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 .btn {
