@@ -39,26 +39,36 @@ class App extends Component {
 
   }
 
-  showCard = (id) => (event) => {
+  showCard = (id, imageUrl) => (event) => {
     event.preventDefault()
 
-    cardService
-      .getById(id)
-      .then(response => {
-        this.setState({
-          showCard: response.card,
-          mouseOver: false,
-          hoverImageUrl: ''
-        })
+    const touchsupport = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0)
+    if (!touchsupport){ // browser doesn't support touch
+    console.log("JOO")
+      this.setState({
+        mouseOver: true,
+        hoverImageUrl: imageUrl
       })
+    } else {
+console.log("EI")
+      cardService
+        .getById(id)
+        .then(response => {
+          this.setState({
+            showCard: response.card,
+            mouseOver: false,
+            hoverImageUrl: ''
+          })
+        })
+    }
   }
 
-  mouseOver = (hoverImageUrl) => (event) => {
+  mouseOver = (imageUrl) => (event) => {
     event.preventDefault()
 
     this.setState({
       mouseOver: true,
-      hoverImageUrl: hoverImageUrl
+      hoverImageUrl: imageUrl
     })
   }
 

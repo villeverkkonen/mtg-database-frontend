@@ -9,7 +9,7 @@ const CardList = ({ cards, showCard, mouseOver, mouseOut, color }) => {
                 return(
                     <li
                         key={index}
-                        onClick={showCard(card.id)}
+                        onClick={showCard(card.id, card.imageUrl)}
                         onMouseOver={mouseOver(card.imageUrl)}
                         onMouseOut={mouseOut}
                         className="cardListLi list-group-item list-group-item-action list-group-item-warning"
