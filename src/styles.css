@@ -50,6 +50,10 @@ body {
     text-align: right;
 }
 
+.hoverImage {
+    margin-bottom: 20px;
+}
+
 .colorButtons {
     margin-top: 20px;
 }
