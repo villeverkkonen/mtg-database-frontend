@@ -97,6 +97,10 @@ body {
     background-color: #c653c6;
 }
 
+.draftCardImage {
+    padding: 5px;
+}
+
 @media screen and (max-width: 440px) {
     .btn {
         padding: 5px;
@@ -112,5 +116,9 @@ body {
 
     .showCardRow {
         margin-bottom: 5px;
+    }
+
+    #draft-select {
+        margin-left: 0px;
     }
 }
