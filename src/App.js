@@ -105,17 +105,14 @@ class App extends Component {
     } else {
       if (this.state.hoverImageUrl === imageUrl) {
         this.setState({
-          cards: [],
           draftCards: [],
           mouseOver: false,
           showCard: null,
-          hoverImageUrl: '',
           cardListColor: '',
           showLinkForId: ''
         })
       } else {
         this.setState({
-          cards: [],
           draftCards: [],
           mouseOver: true,
           hoverImageUrl: imageUrl,
@@ -133,12 +130,10 @@ class App extends Component {
       .getById(id)
       .then(response => {
         this.setState({
-          cards: [],
           draftCards: [],
           showCard: response.card,
           mouseOver: false,
           hoverImageUrl: '',
-          cardListColor: '',
           showLinkForId: ''
         })
       })
@@ -157,7 +152,6 @@ class App extends Component {
           showCard: response.card,
           mouseOver: false,
           hoverImageUrl: '',
-          cardListColor: '',
           showLinkForId: ''
         })
       })
