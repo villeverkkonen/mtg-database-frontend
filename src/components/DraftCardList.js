@@ -5,7 +5,7 @@ const DraftCardList = ({ draftCards }) => {
         <div className="draftCardList">
             {draftCards.map(function(card, index) {
                 return (
-                    <img src={card.imageUrl} alt="imageUrl" key={index} />
+                    <img src={card.imageUrl} alt="imageUrl" key={index} className="draftCardImage" />
                 )
             })}
         </div>
