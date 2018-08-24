@@ -9,7 +9,7 @@ body {
 
 .cardListLi {
     font-weight: bold;
-    background-color: rgb(233, 129, 146);
+    background-color: rgb(184, 134, 204);
 }
 
 .cardListLi:hover {
@@ -85,6 +85,12 @@ body {
 
 .buttonGreen {
     background-color: green;
+}
+
+#draft-select {
+    width: fit-content;
+    display: inline-block;
+    margin-left: 20px;
 }
 
 .showLinkForIdButton {

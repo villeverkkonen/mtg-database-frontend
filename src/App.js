@@ -2,14 +2,28 @@ import React, { Component } from 'react'
 import cardService from './services/cards'
 import Card from './components/Card'
 import CardList from './components/CardList'
+import ButtonList from './components/ButtonList'
+import DraftCardList from './components/DraftCardList'
 
 class App extends Component {
   constructor(props) {
     super(props)
+
+    // Bind functions
+    this.getCardsWithColor = this.getCardsWithColor.bind(this)
+    this.playDraft = this.playDraft.bind(this)
+    this.showImageOrCard = this.showImageOrCard.bind(this)
+    this.showCard = this.showCard.bind(this)
+    this.showCardForMobile = this.showCardForMobile.bind(this)
+    this.mouseOver = this.mouseOver.bind(this)
+    this.mouseOut = this.mouseOut.bind(this)
+
     // Check if using mobile with touch
     const touchsupport = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0)
     this.state = {
       cards: [],
+      draftCards: [],
+      sets: [],
       showCard: null,
       mouseOver: false,
       hoverImageUrl: '',
@@ -19,21 +33,65 @@ class App extends Component {
     }
   }
 
+  componentDidMount() {
+    let setsArray = []
+
+    cardService
+      .getSets()
+      .then(response => {
+        response.sets.map(function(set) {
+          return(
+            set.booster ?
+              setsArray.push(set)
+            :
+              null
+          )
+        })
+        setsArray.sort((a, b) => a.releaseDate < b.releaseDate)
+        this.setState({
+          sets: setsArray
+        })
+      })
+  }
+
   // Get 5 random cards with chosen color
-  getCardsWithColor = (event) => {
+  getCardsWithColor = (color) => (event) => {
     event.preventDefault()
-    const color = event.target.value
 
     cardService
       .getColor(color)
       .then(response => {
-        // Add cards to array in state and clear hovering settings
+        // Add cards to array in state and clear possible hovering settings
         this.setState({
           cards: response.cards,
+          draftCards: [],
           showCard: null,
           mouseOver: false,
           hoverImageUrl: '',
-          cardListColor: color
+          cardListColor: color,
+          showLinkForId: ''
+        })
+      })
+  }
+
+  // Get 15 draft cards for given set
+  playDraft = (event) => {
+    event.preventDefault()
+
+    const set = document.getElementById('draft-select').value
+
+    cardService
+      .getDraftCards(set)
+      .then(response => {
+        this.setState({
+          // Add draft cards to array in state and clear possible hovering settings
+          cards: [],
+          draftCards: response.cards,
+          showCard: null,
+          mouseOver: false,
+          hoverImageUrl: '',
+          cardListColor: '',
+          showLinkForId: ''
         })
       })
   }
@@ -47,14 +105,22 @@ class App extends Component {
     } else {
       if (this.state.hoverImageUrl === imageUrl) {
         this.setState({
+          cards: [],
+          draftCards: [],
           mouseOver: false,
+          showCard: null,
           hoverImageUrl: '',
+          cardListColor: '',
           showLinkForId: ''
         })
       } else {
         this.setState({
+          cards: [],
+          draftCards: [],
           mouseOver: true,
           hoverImageUrl: imageUrl,
+          showCard: null,
+          cardListColor: '',
           showLinkForId: id
         })
       }
@@ -67,9 +133,13 @@ class App extends Component {
       .getById(id)
       .then(response => {
         this.setState({
+          cards: [],
+          draftCards: [],
           showCard: response.card,
           mouseOver: false,
-          hoverImageUrl: ''
+          hoverImageUrl: '',
+          cardListColor: '',
+          showLinkForId: ''
         })
       })
   }
@@ -82,9 +152,13 @@ class App extends Component {
       .getById(id)
       .then(response => {
         this.setState({
+          cards: [],
+          draftCards: [],
           showCard: response.card,
           mouseOver: false,
-          hoverImageUrl: ''
+          hoverImageUrl: '',
+          cardListColor: '',
+          showLinkForId: ''
         })
       })
   }
@@ -97,7 +171,7 @@ class App extends Component {
 
       this.setState({
         mouseOver: true,
-        hoverImageUrl: imageUrl
+        hoverImageUrl: imageUrl,
       })
     }
   }
@@ -118,37 +192,48 @@ class App extends Component {
   render() {
     return (
       <div>
-        <div className="colorButtons">
-          <button onClick={this.getCardsWithColor} value='white' className='btn btn-default buttonWhite'>White</button>
-          <button onClick={this.getCardsWithColor} value='blue' className='btn btn-default buttonBlue'>Blue</button>
-          <button onClick={this.getCardsWithColor} value='black' className='btn btn-default buttonBlack'>Black</button>
-          <button onClick={this.getCardsWithColor} value='red' className='btn btn-default buttonRed'>Red</button>
-          <button onClick={this.getCardsWithColor} value='green' className='btn btn-default buttonGreen'>Green</button>
-        </div>
+        <ButtonList
+          getCardsWithColor={this.getCardsWithColor}
+          playDraft={this.playDraft}
+          sets={this.state.sets}
+        />
 
-        {this.state.showCard === null ?
-        <div className="cardList">
+        {this.state.cards !== null ?
           <CardList
             cards={this.state.cards}
             showCardForMobile={this.showCardForMobile}
-            showImageOrCard={this.showImageOrCard.bind(this)}
-            mouseOver={this.mouseOver.bind(this)}
-            mouseOut={this.mouseOut.bind(this)}
+            showImageOrCard={this.showImageOrCard}
+            mouseOver={this.mouseOver}
+            mouseOut={this.mouseOut}
             color={this.state.cardListColor}
             showLinkForId={this.state.showLinkForId}
           />
-        </div>
         :
-        <Card card={this.state.showCard} />
+          null
         }
+
+        {this.state.draftCards !== null ?
+         <DraftCardList
+          draftCards={this.state.draftCards}
+        />
+        :
+          null
+        }
+
+        {this.state.showCard !== null ?
+          <Card card={this.state.showCard} />
+        :
+          null
+        }
+
         {this.state.mouseOver
         ?
           <div className="hoverImage">
             <img src={this.state.hoverImageUrl} alt="imageUrl" />
           </div>
         :
-        null}
-
+          null
+        }
       </div>
     );
   }
