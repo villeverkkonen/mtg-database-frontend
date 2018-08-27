@@ -105,6 +105,7 @@ class App extends Component {
     } else {
       if (this.state.hoverImageUrl === imageUrl) {
         this.setState({
+          cards: [],
           draftCards: [],
           mouseOver: false,
           showCard: null,
@@ -130,6 +131,7 @@ class App extends Component {
       .getById(id)
       .then(response => {
         this.setState({
+          cards: [],
           draftCards: [],
           showCard: response.card,
           mouseOver: false,
