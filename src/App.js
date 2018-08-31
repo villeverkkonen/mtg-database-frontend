@@ -19,6 +19,7 @@ class App extends Component {
     this.mouseOver = this.mouseOver.bind(this)
     this.mouseOut = this.mouseOut.bind(this)
     this.addCardToDeck = this.addCardToDeck.bind(this)
+    this.shuffleNewBoosters = this.shuffleNewBoosters.bind(this)
 
     // Check if using mobile with touch
     const touchsupport = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0)
@@ -34,6 +35,8 @@ class App extends Component {
       hoverImageUrl: '',
       cardListColor: '',
       showLinkForId: '',
+      boosterIndex: 0,
+      draftRound: 0,
       touchsupport: touchsupport
     }
   }
@@ -75,19 +78,23 @@ class App extends Component {
           showDraftDeck: false,
           hoverImageUrl: '',
           cardListColor: color,
-          showLinkForId: ''
+          showLinkForId: '',
+          boosterIndex: 0,
+          draftRound: 0,
         })
       })
   }
 
-  // Get 15 draft cards for given set
+  // Get 8 boosters with 15 draft cards each for given set
   playDraft = async (event) => {
     event.preventDefault()
 
+    // Show loading text while getting the boosters from API
     this.setState({ loadingDraft: true})
 
     const set = document.getElementById('draft-select').value
 
+    // Get 8 boosters
     for (let i = 0; i < 8; i++) {
       await cardService
       .getBooster(set)
@@ -108,7 +115,41 @@ class App extends Component {
       showDraftDeck: false,
       hoverImageUrl: '',
       cardListColor: '',
-      showLinkForId: ''
+      showLinkForId: '',
+      boosterIndex: 0,
+      draftRound: 1
+    })
+  }
+
+  shuffleNewBoosters = async (draftRound) => {
+    // Show loading text while getting the boosters from API
+    this.setState({ loadingDraft: true})
+
+    const set = document.getElementById('draft-select').value
+
+    // Get 8 boosters
+    for (let i = 0; i < 8; i++) {
+      await cardService
+      .getBooster(set)
+      .then(response => {
+        const booster = [response.cards]
+        this.setState({
+          boosters: this.state.boosters.concat(booster),
+          loadingDraft: false
+        })
+      })
+    }
+
+    this.setState({
+      // Add draft cards to array in state and clear possible other settings
+      cards: [],
+      showCard: null,
+      mouseOver: false,
+      hoverImageUrl: '',
+      cardListColor: '',
+      showLinkForId: '',
+      boosterIndex: 0,
+      draftRound: draftRound
     })
   }
 
@@ -116,9 +157,11 @@ class App extends Component {
   showImageOrCard = (id, imageUrl) => (event) => {
     event.preventDefault()
 
+    // If not using mobile and clicked on a card name, show the card
     if (!this.state.touchsupport) {
       this.showCard(id)
     } else {
+      // For mobile, if this card is already clicked, show the card
       if (this.state.hoverImageUrl === imageUrl) {
         this.setState({
           cards: [],
@@ -127,8 +170,11 @@ class App extends Component {
           showDraftDeck: false,
           showCard: null,
           cardListColor: '',
-          showLinkForId: ''
+          showLinkForId: '',
+          boosterIndex: 0,
+          draftRound: 0,
         })
+      // If first click, show the hover image
       } else {
         this.setState({
           boosters: [],
@@ -137,7 +183,9 @@ class App extends Component {
           hoverImageUrl: imageUrl,
           showCard: null,
           cardListColor: '',
-          showLinkForId: id
+          showLinkForId: id,
+          boosterIndex: 0,
+          draftRound: 0,
         })
       }
     }
@@ -155,7 +203,9 @@ class App extends Component {
           mouseOver: false,
           showDraftDeck: false,
           hoverImageUrl: '',
-          showLinkForId: ''
+          showLinkForId: '',
+          boosterIndex: 0,
+          draftRound: 0,
         })
       })
   }
@@ -174,7 +224,9 @@ class App extends Component {
           mouseOver: false,
           showDraftDeck: false,
           hoverImageUrl: '',
-          showLinkForId: ''
+          showLinkForId: '',
+          boosterIndex: 0,
+          draftRound: 0,
         })
       })
   }
@@ -205,17 +257,45 @@ class App extends Component {
     }
   }
 
-  addCardToDeck = (card, index) => (event) => {
+  addCardToDeck = (card, boosterIndex, cardIndex) => async (event) => {
     event.preventDefault()
 
+    let boosterIndexIncrement = await this.state.boosterIndex
+    if (boosterIndexIncrement === 7) {
+      boosterIndexIncrement = 0
+    } else {
+      boosterIndexIncrement += 1
+    }
+
+    // Remove chosen card from booster. Using index over ID because there might be duplicate cards in boosters
     const boosters = this.state.boosters
-    boosters[index] = this.state.boosters[index].filter(c => c.id !== card.id)
-    this.setState({
-      draftDeck: this.state.draftDeck.concat(card),
-      boosters: boosters
+
+    // Remove one random card from every booster
+    boosters.map(function(booster, index) {
+      if (boosterIndex === index) {
+        booster = booster.filter((x, i) => i !== cardIndex)
+        return boosters[index] = booster
+      } else {
+        const removedIndex = Math.floor(Math.random() * Math.floor(booster.length))
+        booster = booster.filter((x, i) => i !== removedIndex)
+        return boosters[index] = booster
+      }
     })
+
+    await this.setState({
+      draftDeck: this.state.draftDeck.concat(card),
+      boosters: boosters,
+      boosterIndex: boosterIndexIncrement
+    })
+
+    if (this.state.boosters[0].length === 0 && this.state.draftRound < 3) {
+      this.shuffleNewBoosters(this.state.draftRound + 1)
+    } else {
+      this.setState({draftRound: 3})
+    }
   }
 
+  // Button to show drafted cards
   showDraftDeck = (event) => {
     event.preventDefault()
 
@@ -275,10 +355,11 @@ class App extends Component {
 
         {this.state.boosters.length > 0
         ?
-         <DraftCardList
-          boosters={this.state.boosters}
-          addCardToDeck={this.addCardToDeck}
-        />
+          <DraftCardList
+            boosters={this.state.boosters}
+            addCardToDeck={this.addCardToDeck}
+            boosterIndex={this.state.boosterIndex}
+          />
         :
           null
         }
@@ -293,7 +374,7 @@ class App extends Component {
         {this.state.mouseOver
         ?
           <div className="hoverImage">
-            <img src={this.state.hoverImageUrl} alt="imageUrl" />
+            <img src={this.state.hoverImageUrl} alt="imageUrl" className="cardImage" />
           </div>
         :
           null
