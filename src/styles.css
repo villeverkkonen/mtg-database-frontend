@@ -91,6 +91,11 @@ body {
     color: black;
 }
 
+.buttonDraftingInfo {
+    color: white;
+    background-color: purple;
+}
+
 #draft-select {
     width: fit-content;
     display: inline-block;
@@ -133,6 +138,14 @@ body {
 }
 
 #draftedDeckTitle {
+    color: gold;
+}
+
+.draftingInfo {
+    display: block;
+}
+
+.draftingInfoText {
     color: gold;
 }
 

@@ -22,6 +22,7 @@ class App extends Component {
     this.shuffleNewBoosters = this.shuffleNewBoosters.bind(this)
     this.showDraftDeck = this.showDraftDeck.bind(this)
     this.showDraftDeckWithoutEvent = this.showDraftDeckWithoutEvent.bind(this)
+    this.toggleDraftingInfo = this.toggleDraftingInfo.bind(this)
 
     // Check if using mobile with touch
     const touchsupport = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0)
@@ -33,6 +34,7 @@ class App extends Component {
       mouseOver: false,
       showDraftDeck: false,
       loadingDraft: false,
+      showDraftingInfo: false,
       showCard: null,
       hoverImageUrl: '',
       cardListColor: '',
@@ -116,6 +118,7 @@ class App extends Component {
       showCard: null,
       mouseOver: false,
       showDraftDeck: false,
+      showDraftingInfo: false,
       hoverImageUrl: '',
       cardListColor: '',
       showLinkForId: '',
@@ -128,7 +131,8 @@ class App extends Component {
     // Show loading text while getting the boosters from API
     this.setState({
       loadingDraft: true,
-      boosters: []
+      boosters: [],
+      showDraftingInfo: false
     })
 
     const set = document.getElementById('draft-select').value
@@ -291,7 +295,8 @@ class App extends Component {
     this.setState({
       draftDeck: this.state.draftDeck.concat(card),
       boosters: boosters,
-      boosterIndex: boosterIndexIncrement
+      boosterIndex: boosterIndexIncrement,
+      showDraftingInfo: false
     })
 
     if (this.state.boosters[0].length === 0 && this.state.draftRound < 3) {
@@ -330,6 +335,16 @@ class App extends Component {
       showLinkForId: '',
       cardListColor: ''
     })
+  }
+
+  toggleDraftingInfo = (event) => {
+    event.preventDefault()
+
+    this.state.showDraftingInfo
+    ?
+      this.setState({ showDraftingInfo: false })
+    :
+      this.setState({ showDraftingInfo: true })
   }
 
   render() {
@@ -380,6 +395,8 @@ class App extends Component {
             boosters={this.state.boosters}
             addCardToDeck={this.addCardToDeck}
             boosterIndex={this.state.boosterIndex}
+            showDraftingInfo={this.state.showDraftingInfo}
+            toggleDraftingInfo={this.toggleDraftingInfo}
           />
         :
           null
