@@ -132,6 +132,10 @@ body {
     color: gold;
 }
 
+#draftedDeckTitle {
+    color: gold;
+}
+
 @media screen and (max-width: 440px) {
     .btn {
         padding: 5px;

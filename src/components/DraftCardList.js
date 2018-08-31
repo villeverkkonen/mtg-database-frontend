@@ -1,8 +1,6 @@
 import React from 'react'
 
 const DraftCardList = ({ boosters, addCardToDeck, boosterIndex }) => {
-    // console.log("BOOSTER INDEX")
-    // console.log(boosterIndex)
     return (
         <div className="draftCardList">
             {boosters[boosterIndex].map(function(card, index) {

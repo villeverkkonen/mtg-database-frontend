@@ -20,6 +20,8 @@ class App extends Component {
     this.mouseOut = this.mouseOut.bind(this)
     this.addCardToDeck = this.addCardToDeck.bind(this)
     this.shuffleNewBoosters = this.shuffleNewBoosters.bind(this)
+    this.showDraftDeck = this.showDraftDeck.bind(this)
+    this.showDraftDeckWithoutEvent = this.showDraftDeckWithoutEvent.bind(this)
 
     // Check if using mobile with touch
     const touchsupport = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0)
@@ -86,7 +88,7 @@ class App extends Component {
   }
 
   // Get 8 boosters with 15 draft cards each for given set
-  playDraft = async (event) => {
+  playDraft = (event) => {
     event.preventDefault()
 
     // Show loading text while getting the boosters from API
@@ -96,7 +98,7 @@ class App extends Component {
 
     // Get 8 boosters
     for (let i = 0; i < 8; i++) {
-      await cardService
+      cardService
       .getBooster(set)
       .then(response => {
         const booster = [response.cards]
@@ -110,6 +112,7 @@ class App extends Component {
     this.setState({
       // Add draft cards to array in state and clear possible other settings
       cards: [],
+      draftDeck: [],
       showCard: null,
       mouseOver: false,
       showDraftDeck: false,
@@ -121,15 +124,18 @@ class App extends Component {
     })
   }
 
-  shuffleNewBoosters = async (draftRound) => {
+  shuffleNewBoosters = (draftRound) => {
     // Show loading text while getting the boosters from API
-    this.setState({ loadingDraft: true})
+    this.setState({
+      loadingDraft: true,
+      boosters: []
+    })
 
     const set = document.getElementById('draft-select').value
 
     // Get 8 boosters
     for (let i = 0; i < 8; i++) {
-      await cardService
+      cardService
       .getBooster(set)
       .then(response => {
         const booster = [response.cards]
@@ -257,10 +263,10 @@ class App extends Component {
     }
   }
 
-  addCardToDeck = (card, boosterIndex, cardIndex) => async (event) => {
+  addCardToDeck = (card, boosterIndex, cardIndex) => (event) => {
     event.preventDefault()
 
-    let boosterIndexIncrement = await this.state.boosterIndex
+    let boosterIndexIncrement = this.state.boosterIndex
     if (boosterIndexIncrement === 7) {
       boosterIndexIncrement = 0
     } else {
@@ -282,16 +288,17 @@ class App extends Component {
       }
     })
 
-    await this.setState({
+    this.setState({
       draftDeck: this.state.draftDeck.concat(card),
       boosters: boosters,
       boosterIndex: boosterIndexIncrement
     })
 
     if (this.state.boosters[0].length === 0 && this.state.draftRound < 3) {
+      this.setState({boosterIndex: 0 })
       this.shuffleNewBoosters(this.state.draftRound + 1)
-    } else {
-      this.setState({draftRound: 3})
+    } else if (this.state.boosters[0].length === 0 && this.state.draftRound === 3) {
+      this.showDraftDeckWithoutEvent()
     }
   }
 
@@ -299,6 +306,20 @@ class App extends Component {
   showDraftDeck = (event) => {
     event.preventDefault()
 
+    this.setState({
+      cards: [],
+      boosters: [],
+      showCard: null,
+      mouseOver: false,
+      showDraftDeck: true,
+      hoverImageUrl: '',
+      showLinkForId: '',
+      cardListColor: ''
+    })
+  }
+
+  // Cannot call upper function from this file, needs event to work
+  showDraftDeckWithoutEvent = () => {
     this.setState({
       cards: [],
       boosters: [],
@@ -353,7 +374,7 @@ class App extends Component {
           null
         }
 
-        {this.state.boosters.length > 0
+        {this.state.boosters.length > 0 && !this.state.showDraftDeck
         ?
           <DraftCardList
             boosters={this.state.boosters}
