@@ -147,6 +147,7 @@ body {
 
 .draftingInfoText {
     color: gold;
+    margin: 5px;
 }
 
 @media screen and (max-width: 440px) {
