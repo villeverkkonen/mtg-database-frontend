@@ -94,7 +94,10 @@ class App extends Component {
     event.preventDefault()
 
     // Show loading text while getting the boosters from API
-    this.setState({ loadingDraft: true})
+    this.setState({
+      loadingDraft: true,
+      boosters: []
+    })
 
     const set = document.getElementById('draft-select').value
 
