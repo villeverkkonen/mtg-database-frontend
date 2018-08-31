@@ -2,8 +2,9 @@ import React, { Component } from 'react'
 import cardService from './services/cards'
 import Card from './components/Card'
 import CardList from './components/CardList'
-import ButtonList from './components/ButtonList'
+import NavBar from './components/NavBar'
 import DraftCardList from './components/DraftCardList'
+import DraftDeck from './components/DraftDeck'
 
 class App extends Component {
   constructor(props) {
@@ -17,19 +18,22 @@ class App extends Component {
     this.showCardForMobile = this.showCardForMobile.bind(this)
     this.mouseOver = this.mouseOver.bind(this)
     this.mouseOut = this.mouseOut.bind(this)
+    this.addCardToDeck = this.addCardToDeck.bind(this)
 
     // Check if using mobile with touch
     const touchsupport = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0)
     this.state = {
       cards: [],
       draftCards: [],
+      draftDeck: [],
       sets: [],
-      showCard: null,
       mouseOver: false,
+      showDraftDeck: false,
+      showCard: null,
       hoverImageUrl: '',
       cardListColor: '',
-      touchsupport: touchsupport,
-      showLinkForId: ''
+      showLinkForId: '',
+      touchsupport: touchsupport
     }
   }
 
@@ -67,6 +71,7 @@ class App extends Component {
           draftCards: [],
           showCard: null,
           mouseOver: false,
+          showDraftDeck: false,
           hoverImageUrl: '',
           cardListColor: color,
           showLinkForId: ''
@@ -89,6 +94,7 @@ class App extends Component {
           draftCards: response.cards,
           showCard: null,
           mouseOver: false,
+          showDraftDeck: false,
           hoverImageUrl: '',
           cardListColor: '',
           showLinkForId: ''
@@ -108,6 +114,7 @@ class App extends Component {
           cards: [],
           draftCards: [],
           mouseOver: false,
+          showDraftDeck: false,
           showCard: null,
           cardListColor: '',
           showLinkForId: ''
@@ -116,6 +123,7 @@ class App extends Component {
         this.setState({
           draftCards: [],
           mouseOver: true,
+          showDraftDeck: false,
           hoverImageUrl: imageUrl,
           showCard: null,
           cardListColor: '',
@@ -135,6 +143,7 @@ class App extends Component {
           draftCards: [],
           showCard: response.card,
           mouseOver: false,
+          showDraftDeck: false,
           hoverImageUrl: '',
           showLinkForId: ''
         })
@@ -153,6 +162,7 @@ class App extends Component {
           draftCards: [],
           showCard: response.card,
           mouseOver: false,
+          showDraftDeck: false,
           hoverImageUrl: '',
           showLinkForId: ''
         })
@@ -185,16 +195,51 @@ class App extends Component {
     }
   }
 
+  addCardToDeck = (card) => (event) => {
+    event.preventDefault()
+
+    const draftCards = this.state.draftCards.filter(c => c.id !== card.id)
+    this.setState({
+      draftDeck: this.state.draftDeck.concat(card),
+      draftCards
+    })
+  }
+
+  showDraftDeck = (event) => {
+    event.preventDefault()
+
+    this.setState({
+      cards: [],
+      draftCards: [],
+      showCard: null,
+      mouseOver: false,
+      showDraftDeck: true,
+      hoverImageUrl: '',
+      showLinkForId: '',
+      cardListColor: ''
+    })
+  }
+
   render() {
     return (
       <div>
-        <ButtonList
+        <NavBar
           getCardsWithColor={this.getCardsWithColor}
           playDraft={this.playDraft}
           sets={this.state.sets}
+          draftDeck={this.state.draftDeck}
+          showDraftDeck={this.showDraftDeck}
         />
 
-        {this.state.cards !== null ?
+        {this.state.showDraftDeck
+        ?
+          <DraftDeck draftDeck={this.state.draftDeck} />
+        :
+          null
+        }
+
+        {this.state.cards.length > 0
+        ?
           <CardList
             cards={this.state.cards}
             showCardForMobile={this.showCardForMobile}
@@ -208,15 +253,18 @@ class App extends Component {
           null
         }
 
-        {this.state.draftCards !== null ?
+        {this.state.draftCards.length > 0
+        ?
          <DraftCardList
           draftCards={this.state.draftCards}
+          addCardToDeck={this.addCardToDeck}
         />
         :
           null
         }
 
-        {this.state.showCard !== null ?
+        {this.state.showCard !== null
+        ?
           <Card card={this.state.showCard} />
         :
           null

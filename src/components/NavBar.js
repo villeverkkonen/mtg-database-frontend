@@ -1,9 +1,9 @@
 import React from 'react'
 
-const ButtonList = ({ getCardsWithColor, playDraft, sets }) => {
+const NavBar = ({ getCardsWithColor, playDraft, showDraftDeck, sets, draftDeck }) => {
 
     return (
-        <div className="colorButtons">
+        <div className="navBarElements">
             <button onClick={getCardsWithColor('white')} className='btn btn-default buttonWhite'>White</button>
             <button onClick={getCardsWithColor('blue')} className='btn btn-default buttonBlue'>Blue</button>
             <button onClick={getCardsWithColor('black')} className='btn btn-default buttonBlack'>Black</button>
@@ -17,8 +17,14 @@ const ButtonList = ({ getCardsWithColor, playDraft, sets }) => {
                     )
                 })}
             </select>
+            {draftDeck.length > 0
+            ?
+                <button onClick={showDraftDeck} className="btn btn-default">Draft Deck ({draftDeck.length})</button>
+            :
+                null
+            }
         </div>
     )
 }
 
-export default ButtonList
+export default NavBar
