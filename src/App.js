@@ -24,11 +24,12 @@ class App extends Component {
     const touchsupport = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0)
     this.state = {
       cards: [],
-      draftCards: [],
+      boosters: [],
       draftDeck: [],
       sets: [],
       mouseOver: false,
       showDraftDeck: false,
+      loadingDraft: false,
       showCard: null,
       hoverImageUrl: '',
       cardListColor: '',
@@ -68,7 +69,7 @@ class App extends Component {
         // Add cards to array in state and clear possible hovering settings
         this.setState({
           cards: response.cards,
-          draftCards: [],
+          boosters: [],
           showCard: null,
           mouseOver: false,
           showDraftDeck: false,
@@ -80,26 +81,35 @@ class App extends Component {
   }
 
   // Get 15 draft cards for given set
-  playDraft = (event) => {
+  playDraft = async (event) => {
     event.preventDefault()
+
+    this.setState({ loadingDraft: true})
 
     const set = document.getElementById('draft-select').value
 
-    cardService
-      .getDraftCards(set)
+    for (let i = 0; i < 8; i++) {
+      await cardService
+      .getBooster(set)
       .then(response => {
+        const booster = [response.cards]
         this.setState({
-          // Add draft cards to array in state and clear possible hovering settings
-          cards: [],
-          draftCards: response.cards,
-          showCard: null,
-          mouseOver: false,
-          showDraftDeck: false,
-          hoverImageUrl: '',
-          cardListColor: '',
-          showLinkForId: ''
+          boosters: this.state.boosters.concat(booster),
+          loadingDraft: false
         })
       })
+    }
+
+    this.setState({
+      // Add draft cards to array in state and clear possible other settings
+      cards: [],
+      showCard: null,
+      mouseOver: false,
+      showDraftDeck: false,
+      hoverImageUrl: '',
+      cardListColor: '',
+      showLinkForId: ''
+    })
   }
 
   // Hovering is not possible if using mobile, so when clicked with mobile, display image and button for show view
@@ -112,7 +122,7 @@ class App extends Component {
       if (this.state.hoverImageUrl === imageUrl) {
         this.setState({
           cards: [],
-          draftCards: [],
+          boosters: [],
           mouseOver: false,
           showDraftDeck: false,
           showCard: null,
@@ -121,7 +131,7 @@ class App extends Component {
         })
       } else {
         this.setState({
-          draftCards: [],
+          boosters: [],
           mouseOver: true,
           showDraftDeck: false,
           hoverImageUrl: imageUrl,
@@ -140,7 +150,7 @@ class App extends Component {
       .then(response => {
         this.setState({
           cards: [],
-          draftCards: [],
+          boosters: [],
           showCard: response.card,
           mouseOver: false,
           showDraftDeck: false,
@@ -159,7 +169,7 @@ class App extends Component {
       .then(response => {
         this.setState({
           cards: [],
-          draftCards: [],
+          boosters: [],
           showCard: response.card,
           mouseOver: false,
           showDraftDeck: false,
@@ -195,13 +205,14 @@ class App extends Component {
     }
   }
 
-  addCardToDeck = (card) => (event) => {
+  addCardToDeck = (card, index) => (event) => {
     event.preventDefault()
 
-    const draftCards = this.state.draftCards.filter(c => c.id !== card.id)
+    const boosters = this.state.boosters
+    boosters[index] = this.state.boosters[index].filter(c => c.id !== card.id)
     this.setState({
       draftDeck: this.state.draftDeck.concat(card),
-      draftCards
+      boosters: boosters
     })
   }
 
@@ -210,7 +221,7 @@ class App extends Component {
 
     this.setState({
       cards: [],
-      draftCards: [],
+      boosters: [],
       showCard: null,
       mouseOver: false,
       showDraftDeck: true,
@@ -230,6 +241,15 @@ class App extends Component {
           draftDeck={this.state.draftDeck}
           showDraftDeck={this.showDraftDeck}
         />
+
+        {this.state.loadingDraft
+        ?
+          <div>
+            <p id="loadingDraftInfo">Loading...</p>
+          </div>
+        :
+          null
+        }
 
         {this.state.showDraftDeck
         ?
@@ -253,10 +273,10 @@ class App extends Component {
           null
         }
 
-        {this.state.draftCards.length > 0
+        {this.state.boosters.length > 0
         ?
          <DraftCardList
-          draftCards={this.state.draftCards}
+          boosters={this.state.boosters}
           addCardToDeck={this.addCardToDeck}
         />
         :

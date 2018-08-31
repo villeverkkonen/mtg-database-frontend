@@ -97,6 +97,16 @@ body {
     background-color: #c653c6;
 }
 
+.draftCardList {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.draftDeck {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
 .draftCardImage {
     padding: 2px;
     width: 200px;
@@ -109,6 +119,11 @@ body {
 
 .draftCardImage:hover {
     cursor: pointer;
+}
+
+#loadingDraftInfo {
+    font-size: 24px;
+    color: gold;
 }
 
 @media screen and (max-width: 440px) {

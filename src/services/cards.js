@@ -16,7 +16,7 @@ const getById = (id) => {
     return request.then(response => { return response.data })
 }
 
-const getDraftCards = (set) => {
+const getBooster = (set) => {
     const request = axios.get(baseUrl + '/sets/' + set + '/booster')
     return request.then(response => { return response.data })
 }
@@ -26,4 +26,4 @@ const getSets = () => {
     return request.then(response => { return response.data })
 }
 
-export default { getAll, getColor, getById, getDraftCards, getSets }
+export default { getAll, getColor, getById, getBooster, getSets }
