@@ -98,7 +98,12 @@ body {
 }
 
 .draftCardImage {
-    padding: 5px;
+    padding: 2px;
+    width: 200px;
+}
+
+.draftCardImage:hover {
+    cursor: pointer;
 }
 
 @media screen and (max-width: 440px) {
@@ -120,5 +125,9 @@ body {
 
     #draft-select {
         margin-left: 0px;
+    }
+
+    .draftCardImage {
+        width: 120px;
     }
 }
