@@ -2,7 +2,7 @@
 
 2018
 
-| Date  | Time | Done work |
+| Date  | Time | Work done |
 |-------|------|-----------|
 | 3.8.  | 4    | Setting up the app and basic API-functionality |
 | 10.8. | 5    | Listing cards by color and showing card image by hovering card title with mouse and showing info page when clicked |
