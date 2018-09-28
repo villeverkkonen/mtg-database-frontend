@@ -1,6 +1,6 @@
 import React from 'react'
 
-const NavBar = ({ getCardsWithColor, playDraft, showDraftDeck, sets, draftDeck }) => {
+const NavBar = ({ getCardsWithColor, playDraft, showDraftDeck, sets, draftDeck, savedDecksAmount, showSavedDecks }) => {
 
     return (
         <div className="navBarElements">
@@ -17,9 +17,12 @@ const NavBar = ({ getCardsWithColor, playDraft, showDraftDeck, sets, draftDeck }
                     )
                 })}
             </select>
+
+            <button onClick={showSavedDecks} className='btn btn-default buttonDefaultBlackText'>Saved Decks ({savedDecksAmount})</button>
+
             {draftDeck.length > 0
             ?
-                <button onClick={showDraftDeck} className="btn btn-default buttonDefaultBlackText">Drafted Deck ({draftDeck.length})</button>
+                <button onClick={showDraftDeck} className='btn btn-default buttonDefaultBlackText'>Drafted Deck ({draftDeck.length})</button>
             :
                 null
             }

@@ -1,10 +1,13 @@
 import React, { Component } from 'react'
 import cardService from './services/cards'
+import deckService from './services/decks'
 import Card from './components/Card'
 import CardList from './components/CardList'
 import NavBar from './components/NavBar'
 import DraftCardList from './components/DraftCardList'
 import DraftDeck from './components/DraftDeck'
+import SavedDeck from './components/SavedDeck'
+import SavedDecksList from './components/SavedDecksList'
 
 class App extends Component {
   constructor(props) {
@@ -24,6 +27,8 @@ class App extends Component {
     this.showDraftDeckWithoutEvent = this.showDraftDeckWithoutEvent.bind(this)
     this.toggleDraftingInfo = this.toggleDraftingInfo.bind(this)
     this.getBackToDrafting = this.getBackToDrafting.bind(this)
+    this.showSavedDecks = this.showSavedDecks.bind(this)
+    this.showSavedDeckById = this.showSavedDeckById.bind(this)
 
     // Check if using mobile with touch
     const touchsupport = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0)
@@ -31,12 +36,15 @@ class App extends Component {
       cards: [],
       boosters: [],
       draftDeck: [],
+      savedDecks: [],
       sets: [],
       mouseOver: false,
       showDraftDeck: false,
+      showSavedDecks: false,
       loadingDraft: false,
       showDraftingInfo: false,
       showCard: null,
+      savedDeckToShow: null,
       hoverImageUrl: '',
       cardListColor: '',
       showLinkForId: '',
@@ -48,7 +56,6 @@ class App extends Component {
 
   componentDidMount() {
     let setsArray = []
-
     cardService
       .getSets()
       .then(response => {
@@ -63,6 +70,14 @@ class App extends Component {
         setsArray.sort((a, b) => a.releaseDate < b.releaseDate)
         this.setState({
           sets: setsArray
+        })
+      })
+    
+    deckService
+      .getAll()
+      .then(savedDecks => {
+        this.setState({
+          savedDecks: savedDecks
         })
       })
   }
@@ -81,11 +96,13 @@ class App extends Component {
           showCard: null,
           mouseOver: false,
           showDraftDeck: false,
+          showSavedDecks: false,
           hoverImageUrl: '',
           cardListColor: color,
           showLinkForId: '',
           boosterIndex: 0,
           draftRound: 0,
+          savedDeckToShow: null
         })
       })
   }
@@ -122,12 +139,14 @@ class App extends Component {
       showCard: null,
       mouseOver: false,
       showDraftDeck: false,
+      showSavedDecks: false,
       showDraftingInfo: false,
       hoverImageUrl: '',
       cardListColor: '',
       showLinkForId: '',
       boosterIndex: 0,
-      draftRound: 1
+      draftRound: 1,
+      savedDeckToShow: null
     })
   }
 
@@ -186,7 +205,7 @@ class App extends Component {
           cardListColor: '',
           showLinkForId: '',
           boosterIndex: 0,
-          draftRound: 0,
+          draftRound: 0
         })
       // If first click, show the hover image
       } else {
@@ -194,11 +213,12 @@ class App extends Component {
           boosters: [],
           mouseOver: true,
           showDraftDeck: false,
+          showSavedDecks: false,
           hoverImageUrl: imageUrl,
           showCard: null,
           showLinkForId: id,
           boosterIndex: 0,
-          draftRound: 0,
+          draftRound: 0
         })
       }
     }
@@ -215,10 +235,11 @@ class App extends Component {
           showCard: response.card,
           mouseOver: false,
           showDraftDeck: false,
+          showSavedDecks: false,
           hoverImageUrl: '',
           showLinkForId: '',
           boosterIndex: 0,
-          draftRound: 0,
+          draftRound: 0
         })
       })
   }
@@ -236,10 +257,11 @@ class App extends Component {
           showCard: response.card,
           mouseOver: false,
           showDraftDeck: false,
+          showSavedDecks: false,
           hoverImageUrl: '',
           showLinkForId: '',
           boosterIndex: 0,
-          draftRound: 0,
+          draftRound: 0
         })
       })
   }
@@ -321,7 +343,9 @@ class App extends Component {
       showDraftDeck: true,
       hoverImageUrl: '',
       showLinkForId: '',
-      cardListColor: ''
+      cardListColor: '',
+      showSavedDecks: false,
+      savedDeckToShow: null
     })
   }
 
@@ -334,7 +358,8 @@ class App extends Component {
       showDraftDeck: true,
       hoverImageUrl: '',
       showLinkForId: '',
-      cardListColor: ''
+      cardListColor: '',
+      showSavedDecks: false
     })
   }
 
@@ -355,6 +380,41 @@ class App extends Component {
       this.setState({ showDraftingInfo: true })
   }
 
+  // Show drafted decks that were saved to database
+  showSavedDecks = (event) => {
+    event.preventDefault()
+
+    this.setState({
+      showSavedDecks: true,
+      cards: [],
+      boosters: [],
+      draftDeck: [],
+      mouseOver: false,
+      showDraftDeck: false,
+      loadingDraft: false,
+      showDraftingInfo: false,
+      showCard: null,
+      hoverImageUrl: '',
+      cardListColor: '',
+      showLinkForId: '',
+      savedDeckToShow: null
+    })
+  }
+
+  // Show selected saved deck
+  showSavedDeckById = (deckId) => (event) => {
+    event.preventDefault()
+
+    deckService
+      .getById(deckId)
+      .then(savedDeckToShow => {
+        this.setState({
+          showSavedDecks: false,
+          savedDeckToShow: savedDeckToShow
+        })
+      })
+  }
+
   render() {
     return (
       <div>
@@ -364,7 +424,28 @@ class App extends Component {
           sets={this.state.sets}
           draftDeck={this.state.draftDeck}
           showDraftDeck={this.showDraftDeck}
+          savedDecksAmount={this.state.savedDecks.length}
+          showSavedDecks={this.showSavedDecks}
         />
+
+        {this.state.savedDeckToShow !== null
+        ?
+          <SavedDeck
+            savedDeck={this.state.savedDeckToShow}
+          />
+        :
+          null
+        }
+
+        {this.state.showSavedDecks
+        ?
+          <SavedDecksList
+            savedDecks={this.state.savedDecks}
+            showSavedDeckById={this.showSavedDeckById}
+          />
+        :
+          null
+        }
 
         {this.state.loadingDraft
         ?

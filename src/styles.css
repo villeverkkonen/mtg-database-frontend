@@ -3,6 +3,11 @@ body {
     text-align: center;
 }
 
+.cardList {
+    display: inline-block;
+    margin: 20px;
+}
+
 .cardListUl {
     width: fit-content;
 }
@@ -17,7 +22,21 @@ body {
     background-color: rgb(255, 145, 0);
 }
 
-.cardList {
+.savedDecksListUl {
+    width: fit-content;
+}
+
+.savedDecksListLi {
+    font-weight: bold;
+    background-color: rgb(184, 134, 204);
+}
+
+.savedDecksListLi:hover {
+    cursor: pointer;
+    background-color: rgb(255, 145, 0);
+}
+
+.savedDecksList {
     display: inline-block;
     margin: 20px;
 }

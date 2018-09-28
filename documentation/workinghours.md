@@ -12,4 +12,5 @@
 | 31.8. | 7	   | Draftings against 7 AI:s which select cards by random. Your selected cards goes to your deck, and you can see your drafted deck with 45 cards |
 | 1.9.  | 1    | Info for drafting in UI and some bug fixes |
 | 28.9. | 2    | Bug fixing, instructions for use and ability to check your deck while drafting and return back to draft |
-|    =	| 34 | |
+| 28.9. | 4    | Ability to list saved decks by name and view the cards, creating frontend builds for backend |
+|    =	| 38 | |
