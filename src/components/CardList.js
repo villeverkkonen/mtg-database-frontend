@@ -14,7 +14,7 @@ const CardList = ({ cards, showCardForMobile, showImageOrCard, mouseOver, mouseO
                                 onClick={showImageOrCard(card.id, card.imageUrl)}
                                 onMouseOver={mouseOver(card.imageUrl)}
                                 onMouseOut={mouseOut}
-                                className="cardListLi list-group-item list-group-item-action list-group-item-warning"
+                                className="cardListLi list-group-item"
                                 style={{color: color}}
                             >
                                 {card.name}
@@ -29,7 +29,7 @@ const CardList = ({ cards, showCardForMobile, showImageOrCard, mouseOver, mouseO
                                 onClick={showImageOrCard(card.id, card.imageUrl)}
                                 onMouseOver={mouseOver(card.imageUrl)}
                                 onMouseOut={mouseOut}
-                                className="cardListLi list-group-item list-group-item-action list-group-item-warning"
+                                className="cardListLi list-group-item"
                                 style={{color: color}}
                             >
                                 {card.name}

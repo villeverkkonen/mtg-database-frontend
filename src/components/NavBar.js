@@ -19,7 +19,7 @@ const NavBar = ({ getCardsWithColor, playDraft, showDraftDeck, sets, draftDeck }
             </select>
             {draftDeck.length > 0
             ?
-                <button onClick={showDraftDeck} className="btn btn-default buttonDraftDeck">Draft Deck ({draftDeck.length})</button>
+                <button onClick={showDraftDeck} className="btn btn-default buttonDefaultBlackText">Drafted Deck ({draftDeck.length})</button>
             :
                 null
             }

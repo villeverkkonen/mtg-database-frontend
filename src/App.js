@@ -23,6 +23,7 @@ class App extends Component {
     this.showDraftDeck = this.showDraftDeck.bind(this)
     this.showDraftDeckWithoutEvent = this.showDraftDeckWithoutEvent.bind(this)
     this.toggleDraftingInfo = this.toggleDraftingInfo.bind(this)
+    this.getBackToDrafting = this.getBackToDrafting.bind(this)
 
     // Check if using mobile with touch
     const touchsupport = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0)
@@ -195,7 +196,6 @@ class App extends Component {
           showDraftDeck: false,
           hoverImageUrl: imageUrl,
           showCard: null,
-          cardListColor: '',
           showLinkForId: id,
           boosterIndex: 0,
           draftRound: 0,
@@ -316,7 +316,6 @@ class App extends Component {
 
     this.setState({
       cards: [],
-      boosters: [],
       showCard: null,
       mouseOver: false,
       showDraftDeck: true,
@@ -330,7 +329,6 @@ class App extends Component {
   showDraftDeckWithoutEvent = () => {
     this.setState({
       cards: [],
-      boosters: [],
       showCard: null,
       mouseOver: false,
       showDraftDeck: true,
@@ -338,6 +336,13 @@ class App extends Component {
       showLinkForId: '',
       cardListColor: ''
     })
+  }
+
+  // Button to get back to drafting from viewing your so far drafted deck
+  getBackToDrafting = (event) => {
+    event.preventDefault()
+
+    this.setState({ showDraftDeck: false })
   }
 
   toggleDraftingInfo = (event) => {
@@ -372,7 +377,11 @@ class App extends Component {
 
         {this.state.showDraftDeck
         ?
-          <DraftDeck draftDeck={this.state.draftDeck} />
+          <DraftDeck
+            draftDeck={this.state.draftDeck}
+            cardsLeft={this.state.boosters[0].length > 0}
+            getBackToDrafting={this.getBackToDrafting}
+          />
         :
           null
         }
