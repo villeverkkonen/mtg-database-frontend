@@ -11,11 +11,9 @@ const getById = (deckId) => {
     return request.then(response => response.data)
 }
 
-const create = (newDeck) => {
-    const request = axios.post(baseUrl, newDeck)
+const create = (newDeck, deckName) => {
+    const request = axios.post(baseUrl, newDeck, deckName)
     return request.then(response => response.data)
 }
-
-
 
 export default { getAll, getById, create }

@@ -1,6 +1,6 @@
 import React from 'react'
 
-const DraftDeck = ({ draftDeck, cardsLeft, getBackToDrafting }) => {
+const DraftDeck = ({ draftDeck, cardsLeft, getBackToDrafting, saveDeck, savedDeckName }) => {
 
     draftDeck.sort(function(a, b) {
         let colorsA = ""
@@ -22,12 +22,23 @@ const DraftDeck = ({ draftDeck, cardsLeft, getBackToDrafting }) => {
 
     return (
         <div className="draftDeck">
+        <div className="savedDeckNameDiv">
+            {savedDeckName != null
+            ?
+                <p className="goldenParagraph">Deck {savedDeckName} has been saved!</p>
+            :
+                null
+            }
+        </div>
+
         { cardsLeft
         ?
             <button onClick={getBackToDrafting} className="btn btn-default buttonDefaultBlackText">Back to drafting</button>
         :
+            // <button onClick={saveDeck(draftDeck, "LOL")} className="btn btn-default saveDeckButton buttonDefaultBlackText">Save Deck</button>
             null
         }
+        <button onClick={saveDeck(draftDeck, "LOL")} className="btn btn-default saveDeckButton buttonDefaultBlackText">Save Deck</button>
         <h1 id="draftedDeckTitle">Drafted Deck</h1>
             {draftDeck.map(function(card, index) {
                 return (

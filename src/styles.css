@@ -22,6 +22,11 @@ body {
     background-color: rgb(255, 145, 0);
 }
 
+.savedDecksList {
+    display: inline-block;
+    margin: 20px;
+}
+
 .savedDecksListUl {
     width: fit-content;
 }
@@ -36,7 +41,7 @@ body {
     background-color: rgb(255, 145, 0);
 }
 
-.savedDecksList {
+.draftDeck {
     display: inline-block;
     margin: 20px;
 }
@@ -116,6 +121,10 @@ body {
     background-color: purple;
 }
 
+.saveDeckButton {
+    margin: 10px;
+}
+
 #draft-select {
     width: fit-content;
     display: inline-block;
@@ -152,6 +161,10 @@ body {
     cursor: pointer;
 }
 
+.savedDeckCardImage {
+    padding: 2px;
+}
+
 #loadingDraftInfo {
     font-size: 24px;
     color: gold;
@@ -168,6 +181,15 @@ body {
 .draftingInfoText {
     color: gold;
     margin: 5px;
+}
+
+.savedDeckName {
+    color: gold;
+    margin: 5px;
+}
+
+.goldenParagraph {
+    color: gold;
 }
 
 @media screen and (max-width: 440px) {

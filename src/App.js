@@ -29,6 +29,7 @@ class App extends Component {
     this.getBackToDrafting = this.getBackToDrafting.bind(this)
     this.showSavedDecks = this.showSavedDecks.bind(this)
     this.showSavedDeckById = this.showSavedDeckById.bind(this)
+    this.saveDeck = this.saveDeck.bind(this)
 
     // Check if using mobile with touch
     const touchsupport = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0)
@@ -45,18 +46,20 @@ class App extends Component {
       showDraftingInfo: false,
       showCard: null,
       savedDeckToShow: null,
+      savedDeckName: null,
       hoverImageUrl: '',
       cardListColor: '',
       showLinkForId: '',
       boosterIndex: 0,
       draftRound: 0,
+      savedDecksAmount: 0,
       touchsupport: touchsupport
     }
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     let setsArray = []
-    cardService
+    await cardService
       .getSets()
       .then(response => {
         response.sets.map(function(set) {
@@ -72,12 +75,13 @@ class App extends Component {
           sets: setsArray
         })
       })
-    
-    deckService
+
+    await deckService
       .getAll()
       .then(savedDecks => {
         this.setState({
-          savedDecks: savedDecks
+          savedDecks: savedDecks,
+          savedDecksAmount: savedDecks.length
         })
       })
   }
@@ -415,6 +419,38 @@ class App extends Component {
       })
   }
 
+  // Save complete deck to database
+  saveDeck = (deckCards, deckName) => async (event) => {
+    event.preventDefault()
+
+    const newDeck = {"name":deckName, "cards":deckCards}
+
+    deckService
+      .create(newDeck)
+      .then(deck => {
+        this.setState({
+          savedDeckName: deck.name
+          // savedDecks: this.state.savedDecks.concat(deck)
+        })
+      })
+      setTimeout(() => {
+        this.setState({
+          savedDeckName: null
+        })
+      }, 3000)
+
+    // Get the saved decks from database
+    // If there are more than 10 saved decks, backend automatically deletes the oldest ones
+    await deckService
+      .getAll()
+      .then(foundDecks => {
+        this.setState({
+          savedDecks: foundDecks,
+          savedDecksAmount: foundDecks.length
+        })
+      })
+  }
+
   render() {
     return (
       <div>
@@ -424,7 +460,7 @@ class App extends Component {
           sets={this.state.sets}
           draftDeck={this.state.draftDeck}
           showDraftDeck={this.showDraftDeck}
-          savedDecksAmount={this.state.savedDecks.length}
+          savedDecksAmount={this.state.savedDecksAmount}
           showSavedDecks={this.showSavedDecks}
         />
 
@@ -462,6 +498,8 @@ class App extends Component {
             draftDeck={this.state.draftDeck}
             cardsLeft={this.state.boosters[0].length > 0}
             getBackToDrafting={this.getBackToDrafting}
+            saveDeck={this.saveDeck}
+            savedDeckName={this.state.savedDeckName}
           />
         :
           null
