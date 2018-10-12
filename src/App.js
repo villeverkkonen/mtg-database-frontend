@@ -30,6 +30,8 @@ class App extends Component {
     this.showSavedDecks = this.showSavedDecks.bind(this)
     this.showSavedDeckById = this.showSavedDeckById.bind(this)
     this.saveDeck = this.saveDeck.bind(this)
+    this.toggleShowSaveDeckForm = this.toggleShowSaveDeckForm.bind(this)
+    this.changeSavedDeckName = this.changeSavedDeckName.bind(this)
 
     // Check if using mobile with touch
     const touchsupport = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0)
@@ -45,8 +47,10 @@ class App extends Component {
       loadingDraft: false,
       showDraftingInfo: false,
       showCard: null,
+      showSavedDeckForm: false,
       savedDeckToShow: null,
       savedDeckName: null,
+      deckIsSaved: false,
       hoverImageUrl: '',
       cardListColor: '',
       showLinkForId: '',
@@ -101,6 +105,7 @@ class App extends Component {
           mouseOver: false,
           showDraftDeck: false,
           showSavedDecks: false,
+          showSavedDeckForm: false,
           hoverImageUrl: '',
           cardListColor: color,
           showLinkForId: '',
@@ -144,6 +149,7 @@ class App extends Component {
       mouseOver: false,
       showDraftDeck: false,
       showSavedDecks: false,
+      showSavedDeckForm: false,
       showDraftingInfo: false,
       hoverImageUrl: '',
       cardListColor: '',
@@ -345,6 +351,7 @@ class App extends Component {
       showCard: null,
       mouseOver: false,
       showDraftDeck: true,
+      showSavedDeckForm: false,
       hoverImageUrl: '',
       showLinkForId: '',
       cardListColor: '',
@@ -360,6 +367,7 @@ class App extends Component {
       showCard: null,
       mouseOver: false,
       showDraftDeck: true,
+      showSavedDeckForm: false,
       hoverImageUrl: '',
       showLinkForId: '',
       cardListColor: '',
@@ -371,7 +379,10 @@ class App extends Component {
   getBackToDrafting = (event) => {
     event.preventDefault()
 
-    this.setState({ showDraftDeck: false })
+    this.setState({
+      showDraftDeck: false,
+      showSavedDeckForm: false
+    })
   }
 
   toggleDraftingInfo = (event) => {
@@ -395,6 +406,7 @@ class App extends Component {
       draftDeck: [],
       mouseOver: false,
       showDraftDeck: false,
+      showSavedDeckForm: false,
       loadingDraft: false,
       showDraftingInfo: false,
       showCard: null,
@@ -414,6 +426,7 @@ class App extends Component {
       .then(savedDeckToShow => {
         this.setState({
           showSavedDecks: false,
+          showSavedDeckForm: false,
           savedDeckToShow: savedDeckToShow
         })
       })
@@ -425,17 +438,20 @@ class App extends Component {
 
     const newDeck = {"name":deckName, "cards":deckCards}
 
-    deckService
+    await deckService
       .create(newDeck)
       .then(deck => {
         this.setState({
-          savedDeckName: deck.name
+          deckIsSaved: true,
+          savedDeckName: deck.name,
+          showSavedDeckForm: false
           // savedDecks: this.state.savedDecks.concat(deck)
         })
       })
       setTimeout(() => {
         this.setState({
-          savedDeckName: null
+          savedDeckName: null,
+          deckIsSaved: false
         })
       }, 3000)
 
@@ -449,6 +465,28 @@ class App extends Component {
           savedDecksAmount: foundDecks.length
         })
       })
+  }
+
+  toggleShowSaveDeckForm = (event) => {
+    event.preventDefault()
+
+    if (this.state.showSavedDeckForm === false) {
+      this.setState({
+        showSavedDeckForm: true
+      })
+    } else {
+      this.setState({
+        showSavedDeckForm: false
+      })
+    }
+  }
+
+  changeSavedDeckName = (event) => {
+    event.preventDefault()
+
+    this.setState({
+      savedDeckName: event.target.value
+    })
   }
 
   render() {
@@ -499,6 +537,10 @@ class App extends Component {
             cardsLeft={this.state.boosters[0].length > 0}
             getBackToDrafting={this.getBackToDrafting}
             saveDeck={this.saveDeck}
+            deckIsSaved={this.state.deckIsSaved}
+            toggleShowSaveDeckForm={this.toggleShowSaveDeckForm}
+            showSavedDeckForm={this.state.showSavedDeckForm}
+            changeSavedDeckName={this.changeSavedDeckName}
             savedDeckName={this.state.savedDeckName}
           />
         :

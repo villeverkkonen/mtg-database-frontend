@@ -1,6 +1,6 @@
 import React from 'react'
 
-const DraftDeck = ({ draftDeck, cardsLeft, getBackToDrafting, saveDeck, savedDeckName }) => {
+const DraftDeck = ({ draftDeck, cardsLeft, getBackToDrafting, saveDeck, deckIsSaved, toggleShowSaveDeckForm, showSavedDeckForm, changeSavedDeckName, savedDeckName }) => {
 
     draftDeck.sort(function(a, b) {
         let colorsA = ""
@@ -23,7 +23,7 @@ const DraftDeck = ({ draftDeck, cardsLeft, getBackToDrafting, saveDeck, savedDec
     return (
         <div className="draftDeck">
         <div className="savedDeckNameDiv">
-            {savedDeckName != null
+            {deckIsSaved
             ?
                 <p className="goldenParagraph">Deck {savedDeckName} has been saved!</p>
             :
@@ -38,7 +38,19 @@ const DraftDeck = ({ draftDeck, cardsLeft, getBackToDrafting, saveDeck, savedDec
             // <button onClick={saveDeck(draftDeck, "LOL")} className="btn btn-default saveDeckButton buttonDefaultBlackText">Save Deck</button>
             null
         }
-        <button onClick={saveDeck(draftDeck, "LOL")} className="btn btn-default saveDeckButton buttonDefaultBlackText">Save Deck</button>
+        <div className="saveDeckDiv">
+            <button onClick={toggleShowSaveDeckForm}>Save Deck</button>
+            {showSavedDeckForm && !deckIsSaved
+            ?
+                <div className="saveDeckForm">
+                    <input onChange={changeSavedDeckName} placeholder="Deck Name" type="text" id="changeSavedDeckNameInput"></input>
+                    <button onClick={saveDeck(draftDeck, savedDeckName)} className="btn btn-default saveDeckButton buttonDefaultBlackText">Save</button>
+                </div>
+            :
+                null
+            }
+        </div>
+
         <h1 id="draftedDeckTitle">Drafted Deck</h1>
             {draftDeck.map(function(card, index) {
                 return (
