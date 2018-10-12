@@ -436,35 +436,40 @@ class App extends Component {
   saveDeck = (deckCards, deckName) => async (event) => {
     event.preventDefault()
 
-    const newDeck = {"name":deckName, "cards":deckCards}
+    if (!deckName) {
+      alert("Name your deck!")
+    } else {
 
-    await deckService
-      .create(newDeck)
-      .then(deck => {
-        this.setState({
-          deckIsSaved: true,
-          savedDeckName: deck.name,
-          showSavedDeckForm: false
-          // savedDecks: this.state.savedDecks.concat(deck)
-        })
-      })
-      setTimeout(() => {
-        this.setState({
-          savedDeckName: null,
-          deckIsSaved: false
-        })
-      }, 3000)
+      const newDeck = {"name":deckName, "cards":deckCards}
 
-    // Get the saved decks from database
-    // If there are more than 10 saved decks, backend automatically deletes the oldest ones
-    await deckService
-      .getAll()
-      .then(foundDecks => {
-        this.setState({
-          savedDecks: foundDecks,
-          savedDecksAmount: foundDecks.length
+      await deckService
+        .create(newDeck)
+        .then(deck => {
+          this.setState({
+            deckIsSaved: true,
+            savedDeckName: deck.name,
+            showSavedDeckForm: false
+            // savedDecks: this.state.savedDecks.concat(deck)
+          })
         })
-      })
+        setTimeout(() => {
+          this.setState({
+            savedDeckName: null,
+            deckIsSaved: false
+          })
+        }, 3000)
+
+      // Get the saved decks from database
+      // If there are more than 10 saved decks, backend automatically deletes the oldest ones
+      await deckService
+        .getAll()
+        .then(foundDecks => {
+          this.setState({
+            savedDecks: foundDecks,
+            savedDecksAmount: foundDecks.length
+          })
+        })
+    }
   }
 
   toggleShowSaveDeckForm = (event) => {

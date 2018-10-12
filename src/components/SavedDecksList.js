@@ -5,7 +5,7 @@ const SavedDecksList = ({ savedDecks, showSavedDeckById }) => {
         <div className="savedDecksList">
             <ul className="savedDecksListUl list-group">
 
-                {savedDecks.map(function(deck) {
+                {savedDecks.sort((a, b) => a.created_at > b.created_at).map(function(deck) {
                     return (
                         <li
                             onClick={showSavedDeckById(deck.id)}

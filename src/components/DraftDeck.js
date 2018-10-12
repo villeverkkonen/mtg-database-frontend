@@ -31,25 +31,23 @@ const DraftDeck = ({ draftDeck, cardsLeft, getBackToDrafting, saveDeck, deckIsSa
             }
         </div>
 
-        { cardsLeft
+        {cardsLeft
         ?
-            <button onClick={getBackToDrafting} className="btn btn-default buttonDefaultBlackText">Back to drafting</button>
+            <button onClick={getBackToDrafting} className="btn btn-default buttonDefaultPurpleText">Back to drafting</button>
         :
-            // <button onClick={saveDeck(draftDeck, "LOL")} className="btn btn-default saveDeckButton buttonDefaultBlackText">Save Deck</button>
-            null
+            <div className="saveDeckDiv">
+                <button onClick={toggleShowSaveDeckForm} className="btn btn-default buttonDefaultPurpleText">Save Deck</button>
+                {showSavedDeckForm && !deckIsSaved
+                ?
+                    <div className="saveDeckForm">
+                        <input onChange={changeSavedDeckName} placeholder="Deck Name" type="text" id="changeSavedDeckNameInput" autoFocus></input>
+                        <button onClick={saveDeck(draftDeck, savedDeckName)} className="btn btn-default saveDeckButton buttonDefaultBlackText">Save</button>
+                    </div>
+                :
+                    null
+                }
+            </div>
         }
-        <div className="saveDeckDiv">
-            <button onClick={toggleShowSaveDeckForm}>Save Deck</button>
-            {showSavedDeckForm && !deckIsSaved
-            ?
-                <div className="saveDeckForm">
-                    <input onChange={changeSavedDeckName} placeholder="Deck Name" type="text" id="changeSavedDeckNameInput"></input>
-                    <button onClick={saveDeck(draftDeck, savedDeckName)} className="btn btn-default saveDeckButton buttonDefaultBlackText">Save</button>
-                </div>
-            :
-                null
-            }
-        </div>
 
         <h1 id="draftedDeckTitle">Drafted Deck</h1>
             {draftDeck.map(function(card, index) {

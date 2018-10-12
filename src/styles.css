@@ -116,6 +116,11 @@ body {
     color: black;
 }
 
+.buttonDefaultPurpleText {
+    background-color: purple;
+    color: white;
+}
+
 .buttonDraftingInfo {
     color: white;
     background-color: purple;
@@ -128,7 +133,7 @@ body {
 #draft-select {
     width: fit-content;
     display: inline-block;
-    margin-left: 20px;
+    margin: 10px;
 }
 
 .showLinkForIdButton {
@@ -210,7 +215,8 @@ body {
     }
 
     #draft-select {
-        margin-left: 0px;
+        margin: 20px;
+        width: auto;
     }
 
     .cardImage {

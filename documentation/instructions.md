@@ -30,7 +30,7 @@ After picking a card, you pass your booster with 14 cards and get a 14 card boos
 <br />
 When all 15 cards are picked, each player opens a new booster and repeat the previous process.
 <br />
-After drafting all 3 boosters you should have a 45 card deck.
+After drafting all 3 boosters you should have a 45 card deck which you can save to the database.
 
 In the Draft dropdown list you can see various choices for sets to draft.
 <br />
@@ -45,3 +45,7 @@ You can anytime check your so far drafted deck and return back to drafting, if t
 The Drafted Deck -button keeps count of your drafted cards.
 <br />
 ![picture-06](https://github.com/villeverkkonen/mtg-database-frontend/blob/master/documentation/pictures/picture-06.png)
+
+Once draft is finished, pick a name for your deck and save it to the database. Only 15 decks are kept in save at the same time, so the oldest ones will be deleted when new ones comes in.
+<br />
+![picture-06](https://github.com/villeverkkonen/mtg-database-frontend/blob/master/documentation/pictures/picture-07.png)

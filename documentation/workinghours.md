@@ -14,4 +14,5 @@
 | 28.9. | 2    | Bug fixing, instructions for use and ability to check your deck while drafting and return back to draft |
 | 28.9. | 4    | Ability to list saved decks by name and view the cards, creating frontend builds for backend |
 | 5.10. | 3    | Trying to get deck saving working, almost but not yet |
-|    =	| 41 | |
+| 12.10.| 5    | Saving decks with names works. 15 allowed to be saved at the same time, oldest ones will be removed. |
+|    =	| 46   |
