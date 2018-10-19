@@ -48,6 +48,7 @@ class App extends Component {
       showDraftingInfo: false,
       showCard: null,
       showSavedDeckForm: false,
+      showDeckHasBeenSavedText: false,
       savedDeckToShow: null,
       savedDeckName: null,
       deckIsSaved: false,
@@ -68,7 +69,8 @@ class App extends Component {
       .then(response => {
         response.sets.map(function(set) {
           return(
-            set.booster ?
+            set.booster
+            ?
               setsArray.push(set)
             :
               null
@@ -123,6 +125,7 @@ class App extends Component {
     // Show loading text while getting the boosters from API
     this.setState({
       loadingDraft: true,
+      deckIsSaved: false,
       boosters: []
     })
 
@@ -448,14 +451,14 @@ class App extends Component {
           this.setState({
             deckIsSaved: true,
             savedDeckName: deck.name,
-            showSavedDeckForm: false
-            // savedDecks: this.state.savedDecks.concat(deck)
+            showSavedDeckForm: false,
+            showDeckHasBeenSavedText: true
           })
         })
         setTimeout(() => {
           this.setState({
             savedDeckName: null,
-            deckIsSaved: false
+            showDeckHasBeenSavedText: false
           })
         }, 3000)
 
@@ -547,6 +550,7 @@ class App extends Component {
             showSavedDeckForm={this.state.showSavedDeckForm}
             changeSavedDeckName={this.changeSavedDeckName}
             savedDeckName={this.state.savedDeckName}
+            showDeckHasBeenSavedText={this.state.showDeckHasBeenSavedText}
           />
         :
           null

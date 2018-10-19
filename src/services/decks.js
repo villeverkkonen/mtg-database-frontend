@@ -1,5 +1,5 @@
 import axios from 'axios'
-const baseUrl = '/api/decks'
+const baseUrl = 'http://localhost:3001/api/decks'
 
 const getAll = () => {
     const request = axios.get(baseUrl)

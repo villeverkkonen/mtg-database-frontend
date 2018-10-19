@@ -1,6 +1,6 @@
 import React from 'react'
 
-const DraftDeck = ({ draftDeck, cardsLeft, getBackToDrafting, saveDeck, deckIsSaved, toggleShowSaveDeckForm, showSavedDeckForm, changeSavedDeckName, savedDeckName }) => {
+const DraftDeck = ({ draftDeck, cardsLeft, getBackToDrafting, saveDeck, deckIsSaved, toggleShowSaveDeckForm, showSavedDeckForm, changeSavedDeckName, savedDeckName, showDeckHasBeenSavedText }) => {
 
     draftDeck.sort(function(a, b) {
         let colorsA = ""
@@ -23,7 +23,7 @@ const DraftDeck = ({ draftDeck, cardsLeft, getBackToDrafting, saveDeck, deckIsSa
     return (
         <div className="draftDeck">
         <div className="savedDeckNameDiv">
-            {deckIsSaved
+            {showDeckHasBeenSavedText
             ?
                 <p className="goldenParagraph">Deck {savedDeckName} has been saved!</p>
             :
@@ -36,8 +36,14 @@ const DraftDeck = ({ draftDeck, cardsLeft, getBackToDrafting, saveDeck, deckIsSa
             <button onClick={getBackToDrafting} className="btn btn-default buttonDefaultPurpleText">Back to drafting</button>
         :
             <div className="saveDeckDiv">
-                <button onClick={toggleShowSaveDeckForm} className="btn btn-default buttonDefaultPurpleText">Save Deck</button>
-                {showSavedDeckForm && !deckIsSaved
+                {!deckIsSaved
+                ?
+                    <button onClick={toggleShowSaveDeckForm} className="btn btn-default buttonDefaultPurpleText">Save Deck</button>
+                :
+                    null
+                }
+                
+                {showSavedDeckForm
                 ?
                     <div className="saveDeckForm">
                         <input onChange={changeSavedDeckName} placeholder="Deck Name" type="text" id="changeSavedDeckNameInput" autoFocus></input>
