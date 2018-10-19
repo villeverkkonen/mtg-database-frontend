@@ -15,4 +15,5 @@
 | 28.9. | 4    | Ability to list saved decks by name and view the cards, creating frontend builds for backend |
 | 5.10. | 3    | Trying to get deck saving working, almost but not yet |
 | 12.10.| 5    | Saving decks with names works. 15 allowed to be saved at the same time, oldest ones will be removed. |
-|    =	| 46   |
+| 19.10.| 5    | Possibility to do other things and continue drafting after that, sorting cards, styling |
+|    =	| 51   |

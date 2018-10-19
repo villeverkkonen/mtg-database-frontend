@@ -8,12 +8,14 @@ const DraftDeck = ({ draftDeck, cardsLeft, getBackToDrafting, saveDeck, deckIsSa
             for (let i = 0; i < a.colors.length; i++) {
                 colorsA += a.colors[i]
             }
+            colorsA += a.cmc
         }
         let colorsB = ""
         if (b.colors) {
             for (let i = 0; i < b.colors.length; i++) {
                 colorsB += b.colors[i]
             }
+            colorsB += b.cmc
         }
         if (colorsA < colorsB) return -1
         if (colorsA > colorsB) return 1

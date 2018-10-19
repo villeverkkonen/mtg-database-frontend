@@ -52,6 +52,8 @@ class App extends Component {
       savedDeckToShow: null,
       savedDeckName: null,
       deckIsSaved: false,
+      cardsLeft: false,
+      draftSet: '',
       hoverImageUrl: '',
       cardListColor: '',
       showLinkForId: '',
@@ -119,20 +121,23 @@ class App extends Component {
   playDraft = (event) => {
     event.preventDefault()
 
+    const draftSet = document.getElementById('draft-select').value
+
     // Show loading text while getting the boosters from API
     this.setState({
       loadingDraft: true,
       deckIsSaved: false,
-      boosters: []
+      boosters: [],
+      draftSet: draftSet
     })
 
-    const set = document.getElementById('draft-select').value
+    // Change value back to default
     document.getElementById("draft-select").value = "Draft"
 
     // Get 8 boosters
     for (let i = 0; i < 8; i++) {
       cardService
-      .getBooster(set)
+      .getBooster(draftSet)
       .then(response => {
         const booster = [response.cards]
         this.setState({
@@ -152,6 +157,7 @@ class App extends Component {
       showSavedDecks: false,
       showSavedDeckForm: false,
       showDraftingInfo: false,
+      cardsLeft: true,
       hoverImageUrl: '',
       cardListColor: '',
       showLinkForId: '',
@@ -169,16 +175,15 @@ class App extends Component {
       showDraftingInfo: false
     })
 
-    const set = document.getElementById('draft-select').value
-
     // Get 8 boosters
     for (let i = 0; i < 8; i++) {
       cardService
-      .getBooster(set)
+      .getBooster(this.state.draftSet)
       .then(response => {
         const booster = [response.cards]
         this.setState({
           boosters: this.state.boosters.concat(booster),
+          cardsLeft: true,
           loadingDraft: false
         })
       })
@@ -324,7 +329,10 @@ class App extends Component {
     })
 
     if (this.state.boosters[0].length === 0 && this.state.draftRound < 3) {
-      this.setState({boosterIndex: 0 })
+      this.setState({
+        boosterIndex: 0,
+        cardsLeft: false
+      })
       this.shuffleNewBoosters(this.state.draftRound + 1)
     } else if (this.state.boosters[0].length === 0 && this.state.draftRound === 3) {
       this.showDraftDeckWithoutEvent()
@@ -360,7 +368,8 @@ class App extends Component {
       hoverImageUrl: '',
       showLinkForId: '',
       cardListColor: '',
-      showSavedDecks: false
+      showSavedDecks: false,
+      cardsLeft: false
     })
   }
 
@@ -490,7 +499,7 @@ class App extends Component {
           sets={this.state.sets}
           draftDeck={this.state.draftDeck}
           showDraftDeck={this.showDraftDeck}
-          savedDecksAmount={this.state.savedDecksAmount}
+          savedDecksAmount={this.state.savedDecks.length}
           showSavedDecks={this.showSavedDecks}
         />
 
@@ -526,7 +535,7 @@ class App extends Component {
         ?
           <DraftDeck
             draftDeck={this.state.draftDeck}
-            cardsLeft={this.state.boosters[0].length > 0}
+            cardsLeft={this.state.cardsLeft}
             getBackToDrafting={this.getBackToDrafting}
             saveDeck={this.saveDeck}
             deckIsSaved={this.state.deckIsSaved}
