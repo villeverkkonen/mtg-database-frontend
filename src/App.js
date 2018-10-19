@@ -102,7 +102,6 @@ class App extends Component {
         // Add cards to array in state and clear possible hovering settings
         this.setState({
           cards: response.cards,
-          boosters: [],
           showCard: null,
           mouseOver: false,
           showDraftDeck: false,
@@ -111,9 +110,7 @@ class App extends Component {
           hoverImageUrl: '',
           cardListColor: color,
           showLinkForId: '',
-          boosterIndex: 0,
-          draftRound: 0,
-          savedDeckToShow: null
+          savedDeckToShow: null,
         })
       })
   }
@@ -130,6 +127,7 @@ class App extends Component {
     })
 
     const set = document.getElementById('draft-select').value
+    document.getElementById("draft-select").value = "Draft"
 
     // Get 8 boosters
     for (let i = 0; i < 8; i++) {
@@ -211,27 +209,21 @@ class App extends Component {
       if (this.state.hoverImageUrl === imageUrl) {
         this.setState({
           cards: [],
-          boosters: [],
           mouseOver: false,
           showDraftDeck: false,
           showCard: null,
           cardListColor: '',
-          showLinkForId: '',
-          boosterIndex: 0,
-          draftRound: 0
+          showLinkForId: ''
         })
       // If first click, show the hover image
       } else {
         this.setState({
-          boosters: [],
           mouseOver: true,
           showDraftDeck: false,
           showSavedDecks: false,
           hoverImageUrl: imageUrl,
           showCard: null,
-          showLinkForId: id,
-          boosterIndex: 0,
-          draftRound: 0
+          showLinkForId: id
         })
       }
     }
@@ -244,15 +236,12 @@ class App extends Component {
       .then(response => {
         this.setState({
           cards: [],
-          boosters: [],
           showCard: response.card,
           mouseOver: false,
           showDraftDeck: false,
           showSavedDecks: false,
           hoverImageUrl: '',
-          showLinkForId: '',
-          boosterIndex: 0,
-          draftRound: 0
+          showLinkForId: ''
         })
       })
   }
@@ -266,15 +255,12 @@ class App extends Component {
       .then(response => {
         this.setState({
           cards: [],
-          boosters: [],
           showCard: response.card,
           mouseOver: false,
           showDraftDeck: false,
           showSavedDecks: false,
           hoverImageUrl: '',
-          showLinkForId: '',
-          boosterIndex: 0,
-          draftRound: 0
+          showLinkForId: ''
         })
       })
   }
@@ -405,8 +391,6 @@ class App extends Component {
     this.setState({
       showSavedDecks: true,
       cards: [],
-      boosters: [],
-      draftDeck: [],
       mouseOver: false,
       showDraftDeck: false,
       showSavedDeckForm: false,
@@ -571,7 +555,8 @@ class App extends Component {
           null
         }
 
-        {this.state.boosters.length > 0 && !this.state.showDraftDeck
+        {this.state.boosters.length > 0 && !this.state.showDraftDeck && !this.state.showSavedDecks &&
+        !this.state.savedDeckToShow && this.state.cards.length === 0 && !this.state.showCard
         ?
           <DraftCardList
             boosters={this.state.boosters}
