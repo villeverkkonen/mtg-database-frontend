@@ -22,7 +22,7 @@ const getBooster = (set) => {
 }
 
 const getSets = () => {
-    const request = axios.get(baseUrl + '/sets?name=Guilds of Ravnica|Core Set 2019|Dominaria|Ixalan|Rivals of Ixalan|Aether Revolt|Hour of Devastation|Amonkhet|alpha')
+    const request = axios.get(baseUrl + '/sets?name=Guilds of Ravnica|Core Set 2019|Dominaria|Rivals of Ixalan|Ixalan|Amonkhet|Hour of Devastation|alpha')
     return request.then(response => { return response.data })
 }
 

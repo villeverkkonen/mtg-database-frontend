@@ -69,7 +69,12 @@ class App extends Component {
     await cardService
       .getSets()
       .then(response => {
-        response.sets.map(function(set) {
+        const sets = response.sets.sort(function(a, b) {
+          if (a.releaseDate > b.releaseDate) return -1
+          if (a.releaseDate < b.releaseDate) return 1
+          return 0;
+        })
+        sets.map(function(set) {
           return(
             set.booster
             ?

@@ -1,7 +1,11 @@
 # Working hours monitoring
 
-2018
+## Total
+= 65h
 
+## Frontend
+
+2018
 | Date  | Time | Work done |
 |-------|------|-----------|
 | 3.8.  | 4    | Setting up the app and basic API-functionality |
@@ -16,4 +20,20 @@
 | 5.10. | 3    | Trying to get deck saving working, almost but not yet |
 | 12.10.| 5    | Saving decks with names works. 15 allowed to be saved at the same time, oldest ones will be removed. |
 | 19.10.| 5    | Possibility to do other things and continue drafting after that, sorting cards, styling |
-|    =	| 51   |
+| 26.10.| 3    | Sorting decks and final settings |
+|    =	| 54   |
+
+## Backend
+
+2018
+| Date  | Time | Work done |
+|-------|------|-----------|
+| 3.8.  | 1    | Setting up the back end |
+| 10.8. | 1    | Able to run the server |
+| 31.8. | 1    | Dependencies and testing the backend with examples |
+| 28.9. | 3    | Routes and database connections so decks can be saved and viewed |
+| 5.10. | 2    | Trying to get deck saving working and deleting automatically oldest ones if more than 10 decks exist already |
+| 12.10.| 1    | Saving decks with name and created_at date, and cards of course |
+| 19.10.| 1    | Mongoose settings |
+| 26.10.| 1    | Settings |
+|    =	| 11   | |
