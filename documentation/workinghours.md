@@ -5,8 +5,7 @@
 
 ## Frontend
 
-2018
-| Date  | Time | Work done |
+| Date (2018) | Time | Work done |
 |-------|------|-----------|
 | 3.8.  | 4    | Setting up the app and basic API-functionality |
 | 10.8. | 5    | Listing cards by color and showing card image by hovering card title with mouse and showing info page when clicked |
@@ -25,8 +24,7 @@
 
 ## Backend
 
-2018
-| Date  | Time | Work done |
+| Date (2018) | Time | Work done |
 |-------|------|-----------|
 | 3.8.  | 1    | Setting up the back end |
 | 10.8. | 1    | Able to run the server |
