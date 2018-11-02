@@ -5,6 +5,7 @@
 
 ## Frontend
 
+2018
 | Date  | Time | Work done |
 |-------|------|-----------|
 | 3.8.  | 4    | Setting up the app and basic API-functionality |
@@ -24,6 +25,7 @@
 
 ## Backend
 
+2018
 | Date  | Time | Work done |
 |-------|------|-----------|
 | 3.8.  | 1    | Setting up the back end |
