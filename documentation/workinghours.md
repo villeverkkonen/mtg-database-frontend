@@ -1,7 +1,7 @@
 # Working hours monitoring
 
 ## Total
-= 65h
+= 67h
 
 ## Frontend
 
@@ -36,4 +36,5 @@
 | 12.10.| 1    | Saving decks with name and created_at date, and cards of course |
 | 19.10.| 1    | Mongoose settings |
 | 26.10.| 1    | Settings |
-|    =	| 11   | |
+| 2.11. | 2    | Deploying to Heroku, the problem was that /build was in .gitignore... |
+|    =	| 13   | |
