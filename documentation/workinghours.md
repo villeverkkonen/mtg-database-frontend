@@ -1,3 +1,10 @@
+# Working hours monitoring
+
+## Total
+= 67h
+
+## Frontend
+
 | Date  | Time | Work done |
 |-------|------|-----------|
 | 3.8.  | 4    | Setting up the app and basic API-functionality |
@@ -14,6 +21,8 @@
 | 19.10.| 5    | Possibility to do other things and continue drafting after that, sorting cards, styling |
 | 26.10.| 3    | Sorting decks and final settings |
 |    =	| 54   | |
+
+## Backend
 
 | Date  | Time | Work done |
 |-------|------|-----------|
