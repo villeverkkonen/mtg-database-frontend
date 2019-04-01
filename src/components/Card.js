@@ -1,9 +1,13 @@
 import React from 'react'
 
-const Card = ({ card }) => {
+const Card = ({ card, backToCardList }) => {
   return (
     <div className="showCard">
-        <img src={card.imageUrl} alt="imageUrl" />
+        <div>
+          <button onClick={backToCardList} className="btn buttonDefaultPurpleText">Back</button>
+        </div>
+
+        <img src={card.imageUrl} alt="card_image" />
 
         <div className="row showCardRow">
           <div className="col-sm-4 title-cell showCardLeftColumn">

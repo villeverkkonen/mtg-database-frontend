@@ -1,11 +1,11 @@
 # Working hours monitoring
 
 ## Total
-= 67h
+= 70h
 
 ## Frontend
 
-| Date (2018) | Time | Work done |
+| Date (2018-2019) | Time | Work done |
 |-------|------|-----------|
 | 3.8.  | 4    | Setting up the app and basic API-functionality |
 | 10.8. | 5    | Listing cards by color and showing card image by hovering card title with mouse and showing info page when clicked |
@@ -20,11 +20,12 @@
 | 12.10.| 5    | Saving decks with names works. 15 allowed to be saved at the same time, oldest ones will be removed. |
 | 19.10.| 5    | Possibility to do other things and continue drafting after that, sorting cards, styling |
 | 26.10.| 3    | Sorting decks and final settings |
-|    =	| 54   | |
+| 1.4.  | 3    | New layout stylings and some fixes and new features |
+|    =	| 57   | |
 
 ## Backend
 
-| Date (2018) | Time | Work done |
+| Date (2018-2019) | Time | Work done |
 |-------|------|-----------|
 | 3.8.  | 1    | Setting up the back end |
 | 10.8. | 1    | Able to run the server |

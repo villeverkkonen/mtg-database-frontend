@@ -32,6 +32,7 @@ class App extends Component {
     this.saveDeck = this.saveDeck.bind(this)
     this.toggleShowSaveDeckForm = this.toggleShowSaveDeckForm.bind(this)
     this.changeSavedDeckName = this.changeSavedDeckName.bind(this)
+    this.backToCardList = this.backToCardList.bind(this)
 
     // Check if using mobile with touch
     const touchsupport = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0)
@@ -44,7 +45,7 @@ class App extends Component {
       mouseOver: false,
       showDraftDeck: false,
       showSavedDecks: false,
-      loadingDraft: false,
+      loading: false,
       showDraftingInfo: false,
       showCard: null,
       showSavedDeckForm: false,
@@ -74,15 +75,15 @@ class App extends Component {
           if (a.releaseDate < b.releaseDate) return 1
           return 0;
         })
-        sets.map(function(set) {
+        let setsArray = sets.reduce(function(accumulator, set) {
           return(
             set.booster
             ?
-              setsArray.push(set)
+              accumulator.concat(set)
             :
-              null
+              accumulator
           )
-        })
+        }, [])
         setsArray.sort((a, b) => a.releaseDate < b.releaseDate)
         this.setState({
           sets: setsArray
@@ -130,7 +131,7 @@ class App extends Component {
 
     // Show loading text while getting the boosters from API
     this.setState({
-      loadingDraft: true,
+      loading: true,
       deckIsSaved: false,
       boosters: [],
       draftSet: draftSet
@@ -147,7 +148,7 @@ class App extends Component {
         const booster = [response.cards]
         this.setState({
           boosters: this.state.boosters.concat(booster),
-          loadingDraft: false
+          loading: false
         })
       })
     }
@@ -175,7 +176,6 @@ class App extends Component {
   shuffleNewBoosters = (draftRound) => {
     // Show loading text while getting the boosters from API
     this.setState({
-      loadingDraft: true,
       boosters: [],
       showDraftingInfo: false
     })
@@ -188,8 +188,7 @@ class App extends Component {
         const booster = [response.cards]
         this.setState({
           boosters: this.state.boosters.concat(booster),
-          cardsLeft: true,
-          loadingDraft: false
+          cardsLeft: true
         })
       })
     }
@@ -203,7 +202,8 @@ class App extends Component {
       cardListColor: '',
       showLinkForId: '',
       boosterIndex: 0,
-      draftRound: draftRound
+      draftRound: draftRound,
+      loading: false
     })
   }
 
@@ -218,7 +218,6 @@ class App extends Component {
       // For mobile, if this card is already clicked, show the card
       if (this.state.hoverImageUrl === imageUrl) {
         this.setState({
-          cards: [],
           mouseOver: false,
           showDraftDeck: false,
           showCard: null,
@@ -241,17 +240,20 @@ class App extends Component {
 
   // Two almost duplicate methods because other one needs event.preventDefault() and this won't work with it
   showCard = (id) => {
+    // Getting image takes a while, so show Loading... and hide it when image is retreived
+    this.setState({loading: true})
+
     cardService
       .getById(id)
       .then(response => {
         this.setState({
-          cards: [],
           showCard: response.card,
           mouseOver: false,
           showDraftDeck: false,
           showSavedDecks: false,
           hoverImageUrl: '',
-          showLinkForId: ''
+          showLinkForId: '',
+          loading: false
         })
       })
   }
@@ -259,18 +261,20 @@ class App extends Component {
   // Without preventing default event (clicked from button) this activates straight away when clicked on a card name
   showCardForMobile = (id) => (event) => {
     event.preventDefault()
+    // Getting image takes a while, so show Loading... and hide it when image is retreived
+    this.setState({loading: true})
 
     cardService
       .getById(id)
       .then(response => {
         this.setState({
-          cards: [],
           showCard: response.card,
           mouseOver: false,
           showDraftDeck: false,
           showSavedDecks: false,
           hoverImageUrl: '',
-          showLinkForId: ''
+          showLinkForId: '',
+          loading: false
         })
       })
   }
@@ -374,7 +378,8 @@ class App extends Component {
       showLinkForId: '',
       cardListColor: '',
       showSavedDecks: false,
-      cardsLeft: false
+      cardsLeft: false,
+      loading: false
     })
   }
 
@@ -408,7 +413,7 @@ class App extends Component {
       mouseOver: false,
       showDraftDeck: false,
       showSavedDeckForm: false,
-      loadingDraft: false,
+      loading: false,
       showDraftingInfo: false,
       showCard: null,
       hoverImageUrl: '',
@@ -495,6 +500,14 @@ class App extends Component {
     })
   }
 
+  backToCardList = (event) => {
+    event.preventDefault()
+
+    this.setState({
+      showCard: null
+    })
+  }
+
   render() {
     return (
       <div>
@@ -527,10 +540,10 @@ class App extends Component {
           null
         }
 
-        {this.state.loadingDraft
+        {this.state.loading
         ?
           <div>
-            <p id="loadingDraftInfo">Loading...</p>
+            <p className="loading">Loading...</p>
           </div>
         :
           null
@@ -554,7 +567,7 @@ class App extends Component {
           null
         }
 
-        {this.state.cards.length > 0
+        {this.state.cards.length > 0 && !this.state.showCard
         ?
           <CardList
             cards={this.state.cards}
@@ -585,7 +598,7 @@ class App extends Component {
 
         {this.state.showCard !== null
         ?
-          <Card card={this.state.showCard} />
+          <Card card={this.state.showCard} backToCardList={this.backToCardList} />
         :
           null
         }

@@ -35,7 +35,9 @@ const DraftDeck = ({ draftDeck, cardsLeft, getBackToDrafting, saveDeck, deckIsSa
 
         {cardsLeft
         ?
-            <button onClick={getBackToDrafting} className="btn btn-default buttonDefaultPurpleText">Back to drafting</button>
+            <div>
+                <button onClick={getBackToDrafting} className="btn btn-default buttonDefaultPurpleText">Back to drafting</button>
+            </div>
         :
             <div className="saveDeckDiv">
                 {!deckIsSaved
@@ -49,7 +51,7 @@ const DraftDeck = ({ draftDeck, cardsLeft, getBackToDrafting, saveDeck, deckIsSa
                 ?
                     <div className="saveDeckForm">
                         <input onChange={changeSavedDeckName} placeholder="Deck Name" type="text" id="changeSavedDeckNameInput" autoFocus></input>
-                        <button onClick={saveDeck(draftDeck, savedDeckName)} className="btn btn-default saveDeckButton buttonDefaultBlackText">Save</button>
+                        <button onClick={saveDeck(draftDeck, savedDeckName)} className="btn saveDeckButton">Save</button>
                     </div>
                 :
                     null
@@ -57,7 +59,6 @@ const DraftDeck = ({ draftDeck, cardsLeft, getBackToDrafting, saveDeck, deckIsSa
             </div>
         }
 
-        <h1 id="draftedDeckTitle">Drafted Deck</h1>
             {draftDeck.map(function(card, index) {
                 return (
                     <img src={card.imageUrl} alt="imageUrl" key={index} className="draftDeckCardImage cardImage" />
