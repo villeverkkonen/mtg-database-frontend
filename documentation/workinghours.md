@@ -1,7 +1,7 @@
 # Working hours monitoring
 
 ## Total
-= 70h
+= 72h
 
 ## Frontend
 
@@ -21,6 +21,7 @@
 | 19.10.| 5    | Possibility to do other things and continue drafting after that, sorting cards, styling |
 | 26.10.| 3    | Sorting decks and final settings |
 | 1.4.  | 3    | New layout stylings and some fixes and new features |
+| 5.4.  | 2    | Styling loading text and figuring out why API gives only 14 cards per booster |
 |    =	| 57   | |
 
 ## Backend

@@ -66,7 +66,6 @@ class App extends Component {
   }
 
   async componentDidMount() {
-    let setsArray = []
     await cardService
       .getSets()
       .then(response => {
@@ -143,14 +142,15 @@ class App extends Component {
     // Get 8 boosters
     for (let i = 0; i < 8; i++) {
       cardService
-      .getBooster(draftSet)
-      .then(response => {
-        const booster = [response.cards]
-        this.setState({
-          boosters: this.state.boosters.concat(booster),
-          loading: false
+        .getBooster(draftSet)
+        .then(response => {
+          const booster = [response.cards]
+          console.log(response)
+          this.setState({
+            boosters: this.state.boosters.concat(booster),
+            loading: false
+          })
         })
-      })
     }
 
     this.setState({
@@ -241,18 +241,20 @@ class App extends Component {
   // Two almost duplicate methods because other one needs event.preventDefault() and this won't work with it
   showCard = (id) => {
     // Getting image takes a while, so show Loading... and hide it when image is retreived
-    this.setState({loading: true})
+    this.setState({
+      loading: true,
+      hoverImageUrl: '',
+      mouseOver: false,
+      showDraftDeck: false,
+      showSavedDecks: false,
+      showLinkForId: ''
+    })
 
     cardService
       .getById(id)
       .then(response => {
         this.setState({
           showCard: response.card,
-          mouseOver: false,
-          showDraftDeck: false,
-          showSavedDecks: false,
-          hoverImageUrl: '',
-          showLinkForId: '',
           loading: false
         })
       })
@@ -262,18 +264,20 @@ class App extends Component {
   showCardForMobile = (id) => (event) => {
     event.preventDefault()
     // Getting image takes a while, so show Loading... and hide it when image is retreived
-    this.setState({loading: true})
+    this.setState({
+      loading: true,
+      mouseOver: false,
+      showDraftDeck: false,
+      showSavedDecks: false,
+      hoverImageUrl: '',
+      showLinkForId: ''
+    })
 
     cardService
       .getById(id)
       .then(response => {
         this.setState({
           showCard: response.card,
-          mouseOver: false,
-          showDraftDeck: false,
-          showSavedDecks: false,
-          hoverImageUrl: '',
-          showLinkForId: '',
           loading: false
         })
       })
@@ -542,8 +546,10 @@ class App extends Component {
 
         {this.state.loading
         ?
-          <div>
-            <p className="loading">Loading...</p>
+          <div className="loading">
+            <div className="loadingContent">
+              <p>Loading...</p>
+            </div>
           </div>
         :
           null
@@ -567,7 +573,7 @@ class App extends Component {
           null
         }
 
-        {this.state.cards.length > 0 && !this.state.showCard
+        {this.state.cards.length > 0 && !this.state.showCard && !this.state.loading
         ?
           <CardList
             cards={this.state.cards}
