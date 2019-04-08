@@ -48,4 +48,4 @@ The Drafted Deck -button keeps count of your drafted cards.
 
 Once draft is finished, pick a name for your deck and save it to the database. Only 15 decks are kept in save at the same time, so the oldest ones will be deleted when new ones comes in.
 <br />
-![picture-06](https://github.com/villeverkkonen/mtg-database-frontend/blob/master/documentation/pictures/picture-07.png)
+![picture-07](https://github.com/villeverkkonen/mtg-database-frontend/blob/master/documentation/pictures/picture-07.png)
