@@ -145,7 +145,6 @@ class App extends Component {
         .getBooster(draftSet)
         .then(response => {
           const booster = [response.cards]
-          console.log(response)
           this.setState({
             boosters: this.state.boosters.concat(booster),
             loading: false
