@@ -22,7 +22,8 @@ const getBooster = (set) => {
 }
 
 const getSets = () => {
-    const request = axios.get(baseUrl + '/sets?name=allegiance|guilds|2019|dominaria|rivals|ixalan|amonkhet|devastation|alpha')
+    // allegiance|guilds|2019|dominaria|rivals|ixalan|amonkhet|devastation|
+    const request = axios.get(baseUrl + '/sets?name=alpha')
     return request.then(response => { return response.data })
 }
 
