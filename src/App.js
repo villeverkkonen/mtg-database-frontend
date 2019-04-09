@@ -220,7 +220,6 @@ class App extends Component {
           mouseOver: false,
           showDraftDeck: false,
           showCard: null,
-          cardListColor: '',
           showLinkForId: ''
         })
       // If first click, show the hover image
