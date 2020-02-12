@@ -1,267 +1,267 @@
 body {
-    background-color: #DCDCDC;
-    text-align: center;
+  background-color: #dcdcdc;
+  text-align: center;
 }
 
 .cardList {
-    display: inline-block;
-    margin: 20px;
+  display: inline-block;
+  margin: 20px;
 }
 
 .cardListUl {
-    width: fit-content;
+  width: fit-content;
 }
 
 .cardListLi {
-    font-weight: bold;
-    background-color: rgb(230, 201, 43);
+  font-weight: bold;
+  background-color: rgb(230, 201, 43);
 }
 
 .cardListLi:hover {
-    cursor: pointer;
-    background-color: rgb(255, 145, 0);
+  cursor: pointer;
+  background-color: rgb(255, 145, 0);
 }
 
 .savedDecksList {
-    display: inline-block;
-    margin: 20px;
+  display: inline-block;
+  margin: 20px;
 }
 
 .savedDecksListUl {
-    width: fit-content;
+  width: fit-content;
 }
 
 .savedDecksListLi {
-    font-weight: bold;
-    background-color: rgb(184, 134, 204);
+  font-weight: bold;
+  background-color: rgb(184, 134, 204);
 }
 
 .savedDecksListLi:hover {
-    cursor: pointer;
-    background-color: rgb(255, 145, 0);
+  cursor: pointer;
+  background-color: rgb(255, 145, 0);
 }
 
 .draftDeck {
-    display: inline-block;
-    margin: 20px;
+  display: inline-block;
+  margin: 20px;
 }
 
 .showCard {
-    color: rgb(253, 0, 0);
-    width: 223px;
-    text-align: center;
-    display: inline-block;
-    margin: 5px;
+  color: rgb(253, 0, 0);
+  width: 223px;
+  text-align: center;
+  display: inline-block;
+  margin: 5px;
 }
 
 .showCard .showCardRow .title-cell {
-    font-weight: bold;
-    color: rgb(4, 0, 255);
+  font-weight: bold;
+  color: rgb(4, 0, 255);
 }
 
 .cardText {
-    margin-top: 10px;
+  margin-top: 10px;
 }
 
 .showCardLeftColumn {
-    text-align: left;
+  text-align: left;
 }
 
 .showCardRightColumn {
-    text-align: right;
+  text-align: right;
 }
 
 .hoverImage {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 .navBarElements {
-    background-color: #C0C0C0;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    margin: 10px 10px 0 10px;
-    box-shadow: 3px 3px 7px #888888;
-    border-radius: 5px;
+  background-color: #c0c0c0;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin: 10px 10px 0 10px;
+  box-shadow: 3px 3px 7px #888888;
+  border-radius: 5px;
 }
 
 .btn {
-    margin: 10px;
-    color: white;
-    font-weight: bold;
+  margin: 10px;
+  color: white;
+  font-weight: bold;
 }
 
 .btn:hover {
-    filter: brightness(70%);
+  filter: brightness(70%);
 }
 
 .buttonWhite {
-    background-color: white;
-    color: black;
+  background-color: white;
+  color: black;
 }
 
 .buttonBlue {
-    background-color: blue;
+  background-color: blue;
 }
 
 .buttonBlack {
-    background-color: black;
+  background-color: black;
 }
 
 .buttonRed {
-    background-color: red;
+  background-color: red;
 }
 
 .buttonGreen {
-    background-color: green;
+  background-color: green;
 }
 
 .buttonShowDraftedDeck {
-    color: black;
+  color: black;
 }
 
 .buttonShowSavedDecks {
-    color: black;
+  color: black;
 }
 
 .buttonDefaultPurpleText {
-    background-color: purple;
-    color: white;
+  background-color: purple;
+  color: white;
 }
 
 .buttonDraftingInfo {
-    color: white;
-    background-color: purple;
+  color: white;
+  background-color: purple;
 }
 
 .saveDeckButton {
-    margin: 10px;
-    color: black;
-    background-color: rgb(255, 145, 0);
+  margin: 10px;
+  color: black;
+  background-color: rgb(255, 145, 0);
 }
 
 #draft-select {
-    width: fit-content;
-    display: inline-block;
-    margin: 10px;
+  width: fit-content;
+  display: inline-block;
+  margin: 10px;
 }
 
 .showLinkForIdButton {
-    background-color: #c653c6;
+  background-color: #c653c6;
 }
 
 .draftCardList {
-    margin-top: 5px;
-    margin-bottom: 5px;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 .draftDeck {
-    margin-top: 5px;
-    margin-bottom: 5px;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 .cardImage {
-    width: 180px;
+  width: 180px;
 }
 
 .draftCardImage {
-    padding: 2px;
+  padding: 2px;
 }
 
 .draftDeckCardImage {
-    padding: 2px;
+  padding: 2px;
 }
 
 .draftCardImage:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .savedDeckCardImage {
-    padding: 2px;
+  padding: 2px;
 }
 
 .loading {
-    position: fixed;
-    z-index: 2;
-    padding-top: 100px;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
+  position: fixed;
+  z-index: 2;
+  padding-top: 100px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
 }
 
 .loadingContent {
-    font-size: 24px;
-    color: rgb(253, 57, 57);
-    background-color: white;
-    margin: auto;
-    padding: 5px;
-    width: fit-content;
-    height: 50px;
-    border: 1px solid #888;
-    border-radius: 10px;
-    box-shadow: 3px 3px 7px #888888;
+  font-size: 24px;
+  color: rgb(253, 57, 57);
+  background-color: white;
+  margin: auto;
+  padding: 5px;
+  width: 120px;
+  height: 50px;
+  border: 1px solid #888;
+  border-radius: 10px;
+  box-shadow: 3px 3px 7px #888888;
+  text-align: left;
 }
 
 #draftedDeckTitle {
-    color: rgb(253, 57, 57);
+  color: rgb(253, 57, 57);
 }
 
 .draftingInfo {
-    display: block;
+  display: block;
 }
 
 .draftingInfoText {
-    color: rgb(253, 57, 57);
-    margin: 5px;
+  color: rgb(253, 57, 57);
+  margin: 5px;
 }
 
 .savedDeckName {
-    color: rgb(253, 57, 57);
-    margin: 5px;
+  color: rgb(253, 57, 57);
+  margin: 5px;
 }
 
 .upperBtnRow {
-    display: inline-block;
+  display: inline-block;
 }
 
 .lowerBtnRow {
-    display: inline-block;
+  display: inline-block;
 }
 
 .draftSelectList {
-    display: inline-block;
+  display: inline-block;
 }
 
 @media screen and (max-width: 440px) {
-    
-    .btn {
-        margin: 5px;
-    }
-    .upperBtnRow {
-        width: 100%;
-    }
+  .btn {
+    margin: 5px;
+  }
+  .upperBtnRow {
+    width: 100%;
+  }
 
-    .lowerBtnRow {
-        width: 100%;
-    }
+  .lowerBtnRow {
+    width: 100%;
+  }
 
-    .draftSelectList {
-        width: 100%;
-    }
+  .draftSelectList {
+    width: 100%;
+  }
 
-    .showCardLeftColumn {
-        text-align: center;
-    }
-    
-    .showCardRightColumn {
-        text-align: center;
-    }
+  .showCardLeftColumn {
+    text-align: center;
+  }
 
-    .showCardRow {
-        margin-bottom: 5px;
-    }
+  .showCardRightColumn {
+    text-align: center;
+  }
 
-    .cardImage {
-        width: 140px;
-    }
+  .showCardRow {
+    margin-bottom: 5px;
+  }
+
+  .cardImage {
+    width: 140px;
+  }
 }
