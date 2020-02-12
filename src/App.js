@@ -99,6 +99,7 @@ class App extends Component {
   // Get 5 random cards with chosen color
   getCardsWithColor = color => event => {
     event.preventDefault()
+    this.setState({ loading: true })
 
     cardService.getColor(color).then(response => {
       // Add cards to array in state and clear possible hovering settings
@@ -112,7 +113,8 @@ class App extends Component {
         hoverImageUrl: '',
         cardListColor: color,
         showLinkForId: '',
-        savedDeckToShow: null
+        savedDeckToShow: null,
+        loading: false
       })
     })
   }
