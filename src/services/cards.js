@@ -26,15 +26,23 @@ const getById = id => {
   })
 }
 
-const getDraftBooster = set => {
-  const request = axios.get(baseUrl + '/sets/' + set + '/booster')
-  return request.then(response => {
-    return response.data
-  })
+const getDraftBoosters = async set => {
+  const booster1 = axios.get(baseUrl + '/sets/' + set + '/booster')
+  const booster2 = axios.get(baseUrl + '/sets/' + set + '/booster')
+  const booster3 = axios.get(baseUrl + '/sets/' + set + '/booster')
+  const booster4 = axios.get(baseUrl + '/sets/' + set + '/booster')
+  const booster5 = axios.get(baseUrl + '/sets/' + set + '/booster')
+  const booster6 = axios.get(baseUrl + '/sets/' + set + '/booster')
+  const booster7 = axios.get(baseUrl + '/sets/' + set + '/booster')
+  const booster8 = axios.get(baseUrl + '/sets/' + set + '/booster')
+  return await Promise.all([booster1, booster2, booster3, booster4, booster5, booster6, booster7, booster8])
+    .then(boosters => {
+      return boosters
+    })
 }
 
 const getSets = () => {
-  // allegiance|guilds|2019|dominaria|rivals|ixalan|amonkhet|devastation|
+  // throne|allegiance|guilds|2019|dominaria|rivals|amonkhet|amonkhet|devastation|
   const request = axios.get(baseUrl + '/sets?name=alpha|beta')
   return request.then(response => {
     return response.data
@@ -45,6 +53,6 @@ export default {
   getAll,
   getColor,
   getById,
-  getDraftBooster,
+  getDraftBoosters,
   getSets
 }

@@ -8,17 +8,17 @@ By clicking a button you get five random cards with selected color.
 <br />
 In desktop version if you hover your mouse over the card titles, you can see the preview image.
 <br />
-![picture-01](https://github.com/villeverkkonen/mtg-database-frontend/blob/master/documentation/pictures/picture-01.png)
+![img-01](https://github.com/villeverkkonen/mtg-database-frontend/blob/master/documentation/images/img-01.png)
 
 By clicking a title you can see the info page for selected card.
 <br />
-![picture-02](https://github.com/villeverkkonen/mtg-database-frontend/blob/master/documentation/pictures/picture-02.png)
+![img-02](https://github.com/villeverkkonen/mtg-database-frontend/blob/master/documentation/images/img-02.png)
 
 In mobile you can see the preview image when clicking a title.
 <br />
 The first click also shows a button for the info page.
 <br />
-![picture-03](https://github.com/villeverkkonen/mtg-database-frontend/blob/master/documentation/pictures/picture-03.png)
+![img-03](https://github.com/villeverkkonen/mtg-database-frontend/blob/master/documentation/images/img-03.png)
 
 ## Drafting
 
@@ -34,18 +34,18 @@ After drafting all 3 boosters you should have a 45 card deck which you can save 
 
 In the Draft dropdown list you can see various choices for sets to draft.
 <br />
-![picture-04](https://github.com/villeverkkonen/mtg-database-frontend/blob/master/documentation/pictures/picture-04.png)
+![img-04](https://github.com/villeverkkonen/mtg-database-frontend/blob/master/documentation/images/img-04.png)
 
 By clicking a set your draft begins and first booster is opened.
 <br />
-![picture-05](https://github.com/villeverkkonen/mtg-database-frontend/blob/master/documentation/pictures/picture-05.png)
+![img-05](https://github.com/villeverkkonen/mtg-database-frontend/blob/master/documentation/images/img-05.png)
 
 You can anytime check your so far drafted deck and return back to drafting, if there are still cards left to draft.
 <br />
 The Drafted Deck -button keeps count of your drafted cards.
 <br />
-![picture-06](https://github.com/villeverkkonen/mtg-database-frontend/blob/master/documentation/pictures/picture-06.png)
+![img-06](https://github.com/villeverkkonen/mtg-database-frontend/blob/master/documentation/images/img-06.png)
 
 Once draft is finished, pick a name for your deck and save it to the database. Only 15 decks are kept in save at the same time, so the oldest ones will be deleted when new ones comes in.
 <br />
-![picture-07](https://github.com/villeverkkonen/mtg-database-frontend/blob/master/documentation/pictures/picture-07.png)
+![img-07](https://github.com/villeverkkonen/mtg-database-frontend/blob/master/documentation/images/img-07.png)

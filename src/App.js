@@ -138,11 +138,11 @@ class App extends Component {
 
     let draftBoosters = []
     // Get 8 boosters
-    for (let i = 0; i < 8; i++) {
-      await cardService.getDraftBooster(draftSet).then(response => {
-        draftBoosters = draftBoosters.concat([response.cards])
+    await cardService.getDraftBoosters(draftSet).then(response => {
+      response.map(booster => {
+        return draftBoosters.push(booster.data.cards)
       })
-    }
+    })
 
     this.setState({
       // Add draft cards to array in state and clear possible other settings
@@ -176,11 +176,11 @@ class App extends Component {
 
     let draftBoosters = []
     // Get 8 boosters
-    for (let i = 0; i < 8; i++) {
-      await cardService.getDraftBooster(this.state.draftSet).then(response => {
-        draftBoosters = draftBoosters.concat([response.cards])
+    await cardService.getDraftBoosters(this.state.draftSet).then(response => {
+      response.map(booster => {
+        return draftBoosters.push(booster.data.cards)
       })
-    }
+    })
 
     this.setState({
       // Add draft cards to array in state and clear possible other settings
