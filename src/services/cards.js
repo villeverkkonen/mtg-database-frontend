@@ -35,10 +35,18 @@ const getDraftBoosters = async set => {
   const booster6 = axios.get(baseUrl + '/sets/' + set + '/booster')
   const booster7 = axios.get(baseUrl + '/sets/' + set + '/booster')
   const booster8 = axios.get(baseUrl + '/sets/' + set + '/booster')
-  return await Promise.all([booster1, booster2, booster3, booster4, booster5, booster6, booster7, booster8])
-    .then(boosters => {
-      return boosters
-    })
+  return await Promise.all([
+    booster1,
+    booster2,
+    booster3,
+    booster4,
+    booster5,
+    booster6,
+    booster7,
+    booster8
+  ]).then(boosters => {
+    return boosters
+  })
 }
 
 const getSets = () => {
